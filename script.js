@@ -16,14 +16,27 @@ class Pomodoro {
   }
   
   init(){
+    console.log("started");
     this.timerRunning = true;
     this.startTime = new Date();
     this.roundTimeout = setTimeout(() => {
       this.timeElapsedInMilliseconds = new Date() - this.startTime;
       
-      if (this.isRound) {
-        thi
+      if (this.isRound && this.timeElapsedInMilliseconds === (1000 * 10)) {
+        console.log("round time up yo");
+        this.isRound = false;
       }
+      
+      if (!this.isRound && this.timeElapsedInMilliseconds === (1000 * 5)) {
+        console.log("break time up yo");
+        this.isRound = true;
+      }
+      
+      console.log(this.timeElapsedInMilliseconds);
     }, 60 * 1000);
   }
 }
+
+const app = new Pomodoro();
+
+app.init();

@@ -13,15 +13,18 @@ class Pomodoro {
     this.roundTime = this.defaultRoundTime; // Initialize roundTime
     this.breakTime = this.defaultBreakTime; // Initialize breakTime
     this.timerRunning = false;
-    this.isRound = false;
+    this.isRound = true;
     this.timeElapsed = 0;
   }
   
   init(){
+    console.log("clicked");
     if (!this.timerRunning) {
       this.timerRunning = true;
       timerTextA.innerText = "next break in";
+      timerControlToggle.innerText = "stop";
       this.timeoutRef = setInterval(() => {
+        
         if (this.isRound && this.timeElapsed >= this.roundTime) {
           this.isRound = false;
           this.timeElapsed = 0;
@@ -31,13 +34,19 @@ class Pomodoro {
           this.isRound = true;
           this.timeElapsed = 0;
         }
-
+        if (this.isRound) {
+          timerTextA.innerText = "next break in";
+        } else {
+          timerTextA.innerText = "next round in";
+        }
         this.timeElapsed += SECOND;
         timerTextTime.innerText = this.toSeconds(this.timeElapsed);
       }, SECOND);
-    } else if (this.timeRunning) {
+    } else if (this.timerRunning) {
+      this.timerRunning = false;
       clearInterval(this.timeoutRef);
-      timerTextA.innerText = "next";
+      timerTextA.innerText = "next break in";
+      timerControlToggle.innerText = "start";
     }
     
   }

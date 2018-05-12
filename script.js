@@ -6,6 +6,24 @@ const timerControlEdit = document.querySelector("#time-control-edit");
 
 
 class Pomodoro {
-  this.defaultRoundTime = 25 * 60; // 25 minutes * 60 seconds
-  this.defaultBreakTime = 5 * 60; // 5 minutes * 60 seconds
+  constructor() {
+    this.defaultRoundTime = 25 * 60 * 1000; // 25 minutes * 60 seconds * 1000 milliseconds
+    this.defaultBreakTime = 5 * 60 * 1000; // 5 minutes * 60 seconds * 1000 milliseconds
+    this.roundTime = null; // Initialize roundTime
+    this.breakTime = null; // Initialize breakTime
+    this.timerRunning = false;
+    this.isRound = true;
+  }
+  
+  init(){
+    this.timerRunning = true;
+    this.startTime = new Date();
+    this.roundTimeout = setTimeout(() => {
+      this.timeElapsedInMilliseconds = new Date() - this.startTime;
+      
+      if (this.isRound) {
+        thi
+      }
+    }, 60 * 1000);
+  }
 }

@@ -1,0 +1,94 @@
+:root {
+  --primary-color: #CA6666;
+  --secondary-color: #686868;
+  --primary-hover-color: #B45757;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  min-width: 300px;
+}
+
+.site-heading {
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.site-heading h1 {
+  margin: 0;
+  font-size: 24px;
+  color: var(--primary-color);
+  text-transform: uppercase;
+}
+
+/* .site-heading h1:last-of-type:after {
+  content: '';
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+  width: 67px;
+  height: 1px;
+  margin-top: 20px;
+  background: var(--primary-color);
+} */
+
+.app-container {
+  box-sizing: border-box;
+  width: 300px;
+  height: 300px;
+  border: 1px solid var(--primary-color);
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.timer .timer__text {
+  color: var(--secondary-color);
+  font-size: 24px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.timer .timer__text--large {
+  font-size: 144px;
+}
+
+.divider {
+  display: block;
+  width: 67px;
+  height: 1px;
+  margin: 20px auto;
+  background: var(--primary-color);
+}
+
+.timer-controls {
+  width: 300px;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.button {
+  width: 126px;
+  height: 45px;
+  border: none;
+  background: var(--primary-color);
+  color: #FFF;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  text-transform: uppercase;
+  text-align: center;
+  align-items: center;
+  transition: background 0.25s;
+}
+
+.button:hover {
+  background: var(--primary-hover-color);
+  cursor: pointer;
+  outline: none;
+}

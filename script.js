@@ -13,12 +13,12 @@ class Pomodoro {
     this.roundTime = this.defaultRoundTime; // Initialize roundTime
     this.breakTime = this.defaultBreakTime; // Initialize breakTime
     this.timerRunning = false;
+    this.isEditing = false;
     this.isRound = true;
     this.timeElapsed = 0;
   }
   
-  init(){
-    console.log("clicked");
+  toggleTimer(){
     if (!this.timerRunning) {
       this.timerRunning = true;
       timerTextA.innerText = "next break in";
@@ -44,11 +44,21 @@ class Pomodoro {
       }, SECOND);
     } else if (this.timerRunning) {
       this.timerRunning = false;
+      this.timeElapsed = 0;
       clearInterval(this.timeoutRef);
+      timerTextTime.innerText = this.toSeconds(this.timeElapsed);
       timerTextA.innerText = "next break in";
       timerControlToggle.innerText = "start";
     }
-    
+  }
+  
+  toggleEdit() {
+    if (this.isEditing) {
+      this.isEditing = false;
+      
+    } else if (!this.isEditing) {
+      this.isEditing = true;
+    }
   }
   
   toSeconds(timeInMilliseconds) {
@@ -58,4 +68,5 @@ class Pomodoro {
 }
 
 const app = new Pomodoro();
-timerControlToggle.addEventListener("click", app.init.bind(app));
+
+timerControlToggle.addEventListener("click", app.toggleTimer.bind(app));

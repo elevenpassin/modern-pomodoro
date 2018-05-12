@@ -34,7 +34,7 @@ body {
   background: var(--primary-color);
 } */
 
-.timer {
+.app-container {
   box-sizing: border-box;
   width: 300px;
   height: 300px;

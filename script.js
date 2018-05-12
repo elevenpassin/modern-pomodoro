@@ -7,35 +7,37 @@ const timerControlEdit = document.querySelector("#time-control-edit");
 
 class Pomodoro {
   constructor() {
-    this.defaultRoundTime = 25 * 60 * 1000; // 25 minutes * 60 seconds * 1000 milliseconds
-    this.defaultBreakTime = 5 * 60 * 1000; // 5 minutes * 60 seconds * 1000 milliseconds
-    this.roundTime = null; // Initialize roundTime
-    this.breakTime = null; // Initialize breakTime
+    this.defaultRoundTime = 10 * 1000; // 25 minutes * 60 seconds * 1000 milliseconds
+    this.defaultBreakTime = 5 * 1000; // 5 minutes * 60 seconds * 1000 milliseconds
+    this.roundTime = this.defaultRoundTime; // Initialize roundTime
+    this.breakTime = this.defaultBreakTime; // Initialize breakTime
     this.timerRunning = false;
     this.isRound = true;
+    this.timeElapsed = 0;
   }
   
   init(){
     console.log("started");
     this.timerRunning = true;
     this.startTime = new Date();
-    this.roundTimeout = setTimeout(() => {
-      this.timeElapsedInMilliseconds = new Date() - this.startTime;
+    this.timeoutRef = setInterval(() => {
       
-      if (this.isRound && this.timeElapsedInMilliseconds === (1000 * 10)) {
+      if (this.isRound === true && this.timeElapsed >= this.roundTime) {
         console.log("round time up yo");
         this.isRound = false;
+        this.startTime = new Date();
       }
       
-      if (!this.isRound && this.timeElapsedInMilliseconds === (1000 * 5)) {
+      if (!this.isRound === true && this.timeElapsed >= this.breakTime) {
         console.log("break time up yo");
         this.isRound = true;
+        this.startTime = new Date();
       }
       
-      console.log(this.timeElapsedInMilliseconds);
-    }, 60 * 1000);
+      console.log(this);
+    }, 1000);
   }
 }
 
 const app = new Pomodoro();
-
+app.init();

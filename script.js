@@ -1,7 +1,10 @@
+const timer = document.querySelector("#timer");
 const timerTextTime = document.querySelector("#timer__text-time");
 const timerTextA = document.querySelector("#timer__text-a");
 const timerControlToggle = document.querySelector("#timer-control-toggle");
-const timerControlEdit = document.querySelector("#time-control-edit");
+const timerControlEdit = document.querySelector("#timer-control-edit");
+
+const editor = document.querySelector("#editor");
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
@@ -16,6 +19,11 @@ class Pomodoro {
     this.isEditing = false;
     this.isRound = true;
     this.timeElapsed = 0;
+    
+    editor.style.display = "none";
+    
+    timerControlToggle.addEventListener("click", this.toggleTimer.bind(this));
+    timerControlEdit.addEventListener("click", this.toggleEditor.bind(this));
   }
   
   toggleTimer(){
@@ -52,12 +60,15 @@ class Pomodoro {
     }
   }
   
-  toggleEdit() {
+  toggleEditor() {
     if (this.isEditing) {
       this.isEditing = false;
-      
+      editor.style.display = "none";
+      timer.style.display = "block";
     } else if (!this.isEditing) {
       this.isEditing = true;
+      editor.style.display = "block";
+      timer.style.display = "none";
     }
   }
   
@@ -68,5 +79,3 @@ class Pomodoro {
 }
 
 const app = new Pomodoro();
-
-timerControlToggle.addEventListener("click", app.toggleTimer.bind(app));

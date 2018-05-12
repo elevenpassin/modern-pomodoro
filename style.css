@@ -1,5 +1,10 @@
+:root {
+  --primary-color: #CA6666;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
+  min-width: 300px;
 }
 
 .site-heading {
@@ -10,4 +15,24 @@ body {
 
 .site-heading h1 {
   margin: 0;
+  font-size: 24px;
+  color: var(--primary-color);
+}
+
+.site-heading h1:last-of-type:after {
+  content: '';
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+  width: 67px;
+  height: 1px;
+  margin-top: 20px;
+  background: var(--primary-color);
+}
+
+.timer {
+  width: 300px;
+  height: 300px;
+  border: 1px solid var(--primary-color);
 }

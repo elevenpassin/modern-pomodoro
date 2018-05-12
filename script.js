@@ -39,4 +39,3 @@ class Pomodoro {
 
 const app = new Pomodoro();
 
-app.init();

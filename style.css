@@ -1,6 +1,7 @@
 :root {
   --primary-color: #CA6666;
   --secondary-color: #686868;
+  --primary-hover-color: #B45757;
 }
 
 body {
@@ -41,6 +42,7 @@ body {
   display: flex;
   flex-flow: column;
   justify-content: center;
+  margin: 0 auto;
 }
 
 .timer .timer__text {
@@ -63,6 +65,8 @@ body {
 }
 
 .timer-controls {
+  width: 300px;
+  margin: 0 auto;
   display: flex;
   flex-flow: row;
   justify-content: space-between;
@@ -79,4 +83,12 @@ body {
   justify-content: center;
   text-transform: uppercase;
   text-align: center;
+  align-items: center;
+  transition: background 0.25s;
+}
+
+.button:hover {
+  background: var(--primary-hover-color);
+  cursor: pointer;
+  outline: none;
 }

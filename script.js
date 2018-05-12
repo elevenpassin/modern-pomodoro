@@ -1,6 +1,5 @@
 const timerTextTime = document.querySelector("#timer__text-time");
 const timerTextA = document.querySelector("#timer__text-a");
-const timerTextB = document.querySelector("#timer__text-b");
 const timerControlToggle = document.querySelector("#timer-control-toggle");
 const timerControlEdit = document.querySelector("#time-control-edit");
 
@@ -19,27 +18,35 @@ class Pomodoro {
   }
   
   init(){
-    console.log("started");
-    this.timerRunning = true;
-    this.timeoutRef = setInterval(() => {
-      
-      if (this.isRound === true && this.timeElapsed >= this.roundTime) {
-        
-        this.isRound = false;
-        this.timeElapsed = 0;
-      }
-      
-      if (!this.isRound === true && this.timeElapsed >= this.breakTime) {
-        
-        this.isRound = true;
-        this.timeElapsed = 0;
-      }
+    if (!this.timerRunning) {
+      this.timerRunning = true;
+      timerTextA.innerText = "next break in";
+      this.timeoutRef = setInterval(() => {
+        if (this.isRound && this.timeElapsed >= this.roundTime) {
+          this.isRound = false;
+          this.timeElapsed = 0;
+        }
 
-      this.timeElapsed += SECOND;
-      timerTextTime.innerText = 
-    }, SECOND);
+        if (!this.isRound && this.timeElapsed >= this.breakTime) {
+          this.isRound = true;
+          this.timeElapsed = 0;
+        }
+
+        this.timeElapsed += SECOND;
+        timerTextTime.innerText = this.toSeconds(this.timeElapsed);
+      }, SECOND);
+    } else if (this.timeRunning) {
+      clearInterval(this.timeoutRef);
+      timerTextA.innerText = "next";
+    }
+    
+  }
+  
+  toSeconds(timeInMilliseconds) {
+    const timeInSeconds = Math.floor(timeInMilliseconds / 1000);
+    return timeInSeconds > 9 ? timeInSeconds : `0${timeInSeconds}`;
   }
 }
 
 const app = new Pomodoro();
-app.init();
+timerControlToggle.addEventListener("click", app.init.bind(app));

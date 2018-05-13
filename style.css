@@ -175,10 +175,17 @@ body {
 }
 
 .notification {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  bottom: 0;
+}
+
+.notification {
   background: black;
   min-height: 100px;
-  position: absolute;
-  bottom: 0;
   color: #FFF;
   width: 300px;
   display: flex;

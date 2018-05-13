@@ -3,17 +3,16 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.2.0/workbox
 if (workbox) {
   workbox.routing.registerRoute(
     new RegExp('^https://fonts.(?:googleapis|gstatic).com/(.*)'),
-    workbox.strategies.cacheFirst(),
+    workbox.strategies.cacheFirst({
+      cacheName: 'fonts-cache',
+    }),
   );
-  
-  workbox.routing.registerRoute(
-    new RegExp('^https://cdn\.glitch\.com/.*'),
-    workbox.strategies.cacheFirst(),
-  );
-  
+
   workbox.routing.registerRoute(
     '/',
-    workbox.strategies.cacheFirst()
+    workbox.strategies.cacheFirst({
+      cacheName: 'html-cache',
+    })
   );
   
   workbox.routing.registerRoute(
@@ -26,7 +25,7 @@ if (workbox) {
     })
   );
   
-  webpack.routing.registerRoute(
+  workbox.routing.registerRoute(
     // Cache JS/JSON files
     /.*\.(js)/,
     // Use cache but update in background ASAP

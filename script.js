@@ -1,3 +1,7 @@
+if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+};
+
 const timer = document.querySelector("#timer");
 const timerTextTime = document.querySelector("#timer__text-time");
 const timerTextA = document.querySelector("#timer__text-a");

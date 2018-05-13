@@ -28,7 +28,7 @@ if (workbox) {
   
   webpack.routing.registerRoute(
     // Cache JS/JSON files
-    /.*\.(js|json)/,
+    /.*\.(js)/,
     // Use cache but update in background ASAP
     workbox.strategies.cacheFirst({
       cacheName: 'scripts-cache',

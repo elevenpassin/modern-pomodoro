@@ -11,42 +11,47 @@
   "lang": "en-US",
   "icons": [
     {
-      "src": "images/icons/icon-72x72.png",
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Ficon-72x72.png?1526233540954",
       "sizes": "72x72",
       "type": "image/png"
     },
     {
-      "src": "images/icons/icon-96x96.png",
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Ficon-96x96.png?1526233540591",
       "sizes": "96x96",
       "type": "image/png"
     },
     {
-      "src": "images/icons/icon-128x128.png",
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Ficon-128x128.png?1526233540691",
       "sizes": "128x128",
       "type": "image/png"
     },
     {
-      "src": "images/icons/icon-144x144.png",
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Ficon-144x144.png?1526233540778",
       "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "images/icons/icon-152x152.png",
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fmstile-150x150.png?1526233638006",
+      "sizes": "150x150",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Ficon-152x152.png?1526233540868",
       "sizes": "152x152",
       "type": "image/png"
     },
     {
-      "src": "images/icons/icon-192x192.png",
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Ficon-192x192.png?1526233540498",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "images/icons/icon-384x384.png",
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Ficon-384x384.png?1526233541625",
       "sizes": "384x384",
       "type": "image/png"
     },
     {
-      "src": "images/icons/icon-512x512.png",
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Ficon-512x512.png?1526233541762",
       "sizes": "512x512",
       "type": "image/png"
     }

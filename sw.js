@@ -16,8 +16,22 @@ if (workbox) {
     workbox.strategies.networkFirst()
   );
   
-   workbox.routing.registerRoute(
-    /\.(?:js|css|json)$/,
-    workbox.strategies.networkFirst()
-  ); 
+  workbox.routing.registerRoute(
+    // Cache CSS files
+    /.*\.css/,
+    // Use cache but update in the background ASAP
+    workbox.strategies.staleWhileRevalidate({
+      // Use a custom cache name
+      cacheName: 'css-cache',
+    })
+  );
+  
+  webpack.routing.registerRoute(
+    // Cache JS/JSON files
+    /.*\.(js|json)/,
+    // Use cache but update in background ASAP
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: 'scripts-cache',
+    })
+  )
 }

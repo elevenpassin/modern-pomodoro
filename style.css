@@ -83,6 +83,7 @@ body {
   background: var(--primary-hover-color);
   cursor: pointer;
   outline: none;
+  color: #FFF;
 }
 
 .button:disabled {
@@ -137,22 +138,38 @@ body {
   width: 100%;
   border-top: 1px solid var(--primary-color);
   font-size: 12px;
+  text-transform: uppercase;
 }
 
 .history-table thead tr {
   background: var(--secondary-dark-color);
   height: 25px;
   color: var(--text-color);
-  text-transform: uppercase;
 }
 
 .history-table thead tr th {
   padding: 0 10px;
 }
 
-.history-table tbody tr td {
+.history-table tbody tr {
   border-top: 1px solid var(--primary-color);
   background: var(--background-color);
   height: 45px;
   text-align: center;
+  position: relative;
+}
+
+.history-table tbody tr:nth-child(even) {
+  background: var(--secondary-dark-color);
+}
+
+.history-table tbody tr:hover .delete-button {
+  display: flex;
+}
+
+.clear-history-container {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  margin: 20px;
 }

@@ -101,10 +101,15 @@ class Pomodoro {
     };
   }
   
-  mapEntryText 
+  mapHistoryObjectText(startTime, endTime) {
+    console.log(startTime.toLocaleString().split("").trim());
+    const [ sDate, sTime ] = startTime.toLocaleString().split(",").trim();
+    console.log(sDate, sTime);  
+  }
   
   addToHistory(startTime, endTime, roundsElapsed, breaksElapsed) {
     const historyObject = this.mapToHistoryObject(startTime, endTime, roundsElapsed, breaksElapsed);
+    const historyObjectText = this.mapHistoryObjectText(startTime, endTime);
     this.history.push(historyObject);
   }
   

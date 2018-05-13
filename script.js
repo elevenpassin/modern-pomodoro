@@ -68,6 +68,8 @@ class Pomodoro {
       timerControlEdit.removeAttribute("disabled");
       this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
       clearInterval(this.timeoutRef);
+      this.roundsElapsed = 0;
+      this.breaksElapsed = 0;
       timerTextTime.innerText = this.toSeconds(0);
       timerTextA.innerText = "next break in";
       timerControlToggle.innerText = "start";

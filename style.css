@@ -3,6 +3,7 @@
   --secondary-color: #686868;
   --primary-hover-color: #B45757;
   --primary-disabled-color: #EDA3A3;
+  --background-color: #F9F9F9;
 }
 
 body {
@@ -96,4 +97,13 @@ body {
 
 .button:disabled {
   background: var(--primary-disabled-color);
+}
+
+.editor input {
+  background: var(--background-color);
+  border: none;
+  border-bottom: 1px solid var(--primary-color);
+  height: 57px;
+  width: 272px;
+  margin: 0 auto;
 }

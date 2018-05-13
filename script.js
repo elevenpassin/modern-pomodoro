@@ -9,6 +9,7 @@ const editorRoundTime = document.querySelector("#editor__round-time");
 const editorBreakTime = document.querySelector("#editor__break-time");
 
 const historyTableBody = document.querySelector("#history-table__body");
+const clearHistoryButton = document.querySelector("#clear-history");
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
@@ -26,9 +27,14 @@ class Pomodoro {
     this.breaksElapsed = 0;
     this.history = [];
     
+    this.loadFromLocalStorage();
+    
     editor.style.display = "none";
+    this.toggleClearHistoryButtonVisibility();
+    
     timerControlToggle.addEventListener("click", this.toggleTimer.bind(this));
     timerControlEdit.addEventListener("click", this.toggleEditor.bind(this));
+    clearHistoryButton.addEventListener("click", this.clearHistory.bind(this));
   }
   
   toggleTimer(){
@@ -68,9 +74,12 @@ class Pomodoro {
       timerControlEdit.removeAttribute("disabled");
       this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
       clearInterval(this.timeoutRef);
+      this.roundsElapsed = 0;
+      this.breaksElapsed = 0;
       timerTextTime.innerText = this.toSeconds(0);
       timerTextA.innerText = "next break in";
       timerControlToggle.innerText = "start";
+      this.toggleClearHistoryButtonVisibility();
     }
   }
   
@@ -106,8 +115,19 @@ class Pomodoro {
   }
   
   mapHistoryObjectText(startTime, endTime) {
-    const [ sDate, sTime ] = startTime.toLocaleString().split(",").map((x) => x.trim());
+    let [ sDate, sTime ] = startTime.toLocaleString().split(",").map((x) => x.trim());
     const [ _, eTime ] = endTime.toLocaleString().split(",").map((x) => x.trim());
+    const today = new Date();
+    if (today.toLocaleString().split(",").map(x => x.trim())[0] === sDate) {
+      sDate = "today";
+    }
+    
+    const isYesterday = startTime.getDate()+1 === today.getDate();
+    const isStartTimeEndOfMonth = startTime.getMonth()+1 === today.getMonth();
+    if (isYesterday || isStartTimeEndOfMonth) {
+      sDate = "yesterday";
+    }
+
     return `${sDate} - ${sTime} to ${eTime}`;
   }
   
@@ -115,6 +135,7 @@ class Pomodoro {
     const historyObject = this.mapToHistoryObject(startTime, endTime, roundsElapsed, breaksElapsed);
     this.history.push(historyObject);
     this.generateTable();
+    this.saveToLocalStorage();
   }
   
   generateRowFromHistoryObject(historyObject) {
@@ -128,9 +149,14 @@ class Pomodoro {
     const tableDescBreaks = document.createElement("td");
     tableDescBreaks.innerText = historyObject.breaksElapsed;
     
+    const deleteButton = document.createElement("button");
+    deleteButton.classList.add("button");
+    deleteButton.innerText = "delete";
+    
     tableRow.appendChild(tableDescTimespan);
     tableRow.appendChild(tableDescRounds);
     tableRow.appendChild(tableDescBreaks);
+    
     
     historyTableBody.appendChild(tableRow);
   }
@@ -140,6 +166,34 @@ class Pomodoro {
     this.history.map(historyObject => {
       this.generateRowFromHistoryObject(historyObject);
     })
+  }
+  
+  saveToLocalStorage() {
+    window.localStorage.setItem("history", JSON.stringify(this.history));
+  }
+  
+  loadFromLocalStorage() {
+    const history = window.localStorage.getItem("history");
+    
+    if (history) {
+      this.history = JSON.parse(history);
+      this.generateTable();
+    }
+  }
+  
+  clearHistory() {
+    this.history = [];
+    this.saveToLocalStorage();
+    this.generateTable();
+    this.toggleClearHistoryButtonVisibility();
+  }
+  
+  toggleClearHistoryButtonVisibility() {
+    if (this.history.length > 0) {
+      clearHistoryButton.style.display = "flex";
+    } else {
+      clearHistoryButton.style.display = "none";
+    }
   }
   
   toSeconds(timeInMilliseconds) {

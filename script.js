@@ -26,6 +26,8 @@ class Pomodoro {
     this.breaksElapsed = 0;
     this.history = [];
     
+    this.loadFromLocalStorage();
+    
     editor.style.display = "none";
     timerControlToggle.addEventListener("click", this.toggleTimer.bind(this));
     timerControlEdit.addEventListener("click", this.toggleEditor.bind(this));
@@ -142,9 +144,15 @@ class Pomodoro {
     const tableDescBreaks = document.createElement("td");
     tableDescBreaks.innerText = historyObject.breaksElapsed;
     
+    const deleteButton = document.createElement("div");
+    deleteButton.classList.add("button");
+    deleteButton.classList.add("delete-icon");
+    
     tableRow.appendChild(tableDescTimespan);
     tableRow.appendChild(tableDescRounds);
     tableRow.appendChild(tableDescBreaks);
+    tableRow.appendChild(deleteButton);
+    
     
     historyTableBody.appendChild(tableRow);
   }
@@ -157,11 +165,16 @@ class Pomodoro {
   }
   
   saveToLocalStorage() {
-    window.localStorage.setItem('history', JSON.stringify(this.history));
+    window.localStorage.setItem("history", JSON.stringify(this.history));
   }
   
   loadFromLocalStorage() {
-    const history = window.localStorage.g
+    const history = window.localStorage.getItem("history");
+    
+    if (history) {
+      this.history = JSON.parse(history);
+      this.generateTable();
+    }
   }
   
   toSeconds(timeInMilliseconds) {

@@ -112,13 +112,15 @@ class Pomodoro {
     const [ _, eTime ] = endTime.toLocaleString().split(",").map((x) => x.trim());
     const today = new Date();
     if (today.toLocaleString().split(",").map(x => x.trim())[0] === sDate) {
-      sDate = "today"
+      sDate = "today";
     }
     
-    if (startTime.getDate()+1 === today.getDate()) {
-      
+    const isYesterday = startTime.getDate()+1 === today.getDate();
+    const isStartTimeEndOfMonth = startTime.getMonth()+1 === today.getMonth();
+    if (isYesterday || isStartTimeEndOfMonth) {
+      sDate = "yesterday";
     }
-        
+
     return `${sDate} - ${sTime} to ${eTime}`;
   }
   
@@ -126,6 +128,7 @@ class Pomodoro {
     const historyObject = this.mapToHistoryObject(startTime, endTime, roundsElapsed, breaksElapsed);
     this.history.push(historyObject);
     this.generateTable();
+    this.saveToLocalStorage();
   }
   
   generateRowFromHistoryObject(historyObject) {
@@ -151,6 +154,14 @@ class Pomodoro {
     this.history.map(historyObject => {
       this.generateRowFromHistoryObject(historyObject);
     })
+  }
+  
+  saveToLocalStorage() {
+    window.localStorage.setItem('history', JSON.stringify(this.history));
+  }
+  
+  loadFromLocalStorage() {
+    const history = window.localStorage.g
   }
   
   toSeconds(timeInMilliseconds) {

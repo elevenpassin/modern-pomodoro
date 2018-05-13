@@ -5,6 +5,8 @@ const timerControlToggle = document.querySelector("#timer-control-toggle");
 const timerControlEdit = document.querySelector("#timer-control-edit");
 
 const editor = document.querySelector("#editor");
+const editorRoundTime = document.querySelector("#editor__round-time");
+const editorBreakTime = document.querySelector("#editor__break-time");
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
@@ -18,7 +20,6 @@ class Pomodoro {
     this.timerRunning = false;
     this.isEditing = false;
     this.isRound = true;
-    this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
     
     editor.style.display = "none";
     timerControlToggle.addEventListener("click", this.toggleTimer.bind(this));
@@ -28,6 +29,7 @@ class Pomodoro {
   toggleTimer(){
     if (!this.timerRunning) {
       this.timerRunning = true;
+      this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
       timerControlEdit.setAttribute("disabled", "");
       timerTextA.innerText = "next break in";
       timerControlToggle.innerText = "stop";
@@ -69,6 +71,10 @@ class Pomodoro {
       editor.style.display = "none";
       timer.style.display = "block";
       timerControlEdit.innerText = "Edit";
+      
+      this.roundTime = editorRoundTime.value * 1000;
+      this.breakTime = editorBreakTime.value * 1000;
+      
     } else if (!this.isEditing) {
       this.isEditing = true;
       timerControlToggle.setAttribute("disabled", "");

@@ -173,3 +173,28 @@ body {
   justify-content: center;
   margin: 20px;
 }
+
+.notification {
+  background: black;
+  min-height: 100px;
+  position: absolute;
+  bottom: 0;
+  color: #FFF;
+  width: 300px;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.notification p {
+  height: 30px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.notification p, .notification .button {
+  margin: 0 auto;
+}

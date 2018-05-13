@@ -13,11 +13,11 @@ if (workbox) {
   
   workbox.routing.registerRoute(
     '/',
-    workbox.strategies.cacheFirst()
+    workbox.strategies.staleWhileRevalidate()
   );
   
    workbox.routing.registerRoute(
     /\.(?:js|css|json)$/,
-    workbox.strategies.cacheFirst()
+    workbox.strategies.staleWhileRevalidate()
   ); 
 }

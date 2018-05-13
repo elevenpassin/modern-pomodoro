@@ -214,6 +214,7 @@ let addToHomeScreenDeferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
   // Prevent Chrome 67 and earlier from automatically showing the prompt
   e.preventDefault();
+  console.log("CAN YOU SEE ME");
   // Stash the event so it can be triggered later.
   addToHomeScreenDeferredPrompt = e;
   console.log("meow");

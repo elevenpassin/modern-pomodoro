@@ -30,6 +30,8 @@ class Pomodoro {
     this.loadFromLocalStorage();
     
     editor.style.display = "none";
+    this.toggleClearHistoryButtonVisibility();
+    
     timerControlToggle.addEventListener("click", this.toggleTimer.bind(this));
     timerControlEdit.addEventListener("click", this.toggleEditor.bind(this));
     clearHistoryButton.addEventListener("click", this.clearHistory.bind(this));
@@ -77,6 +79,7 @@ class Pomodoro {
       timerTextTime.innerText = this.toSeconds(0);
       timerTextA.innerText = "next break in";
       timerControlToggle.innerText = "start";
+      this.toggleClearHistoryButtonVisibility();
     }
   }
   
@@ -182,6 +185,15 @@ class Pomodoro {
     this.history = [];
     this.saveToLocalStorage();
     this.generateTable();
+    this.toggleClearHistoryButtonVisibility();
+  }
+  
+  toggleClearHistoryButtonVisibility() {
+    if (this.history.length > 0) {
+      clearHistoryButton.style.display = "flex";
+    } else {
+      clearHistoryButton.style.display = "none";
+    }
   }
   
   toSeconds(timeInMilliseconds) {

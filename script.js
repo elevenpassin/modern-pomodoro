@@ -98,10 +98,14 @@ class Pomodoro {
     }
   }
   
+  addToHistory() {
+    
+  }
+  
   toSeconds(timeInMilliseconds) {
     const timeInSeconds = Math.floor(timeInMilliseconds / 1000);
     return timeInSeconds > 9 ? timeInSeconds : `0${timeInSeconds}`;
   }
 }
 
-const app = new Pomodoro();
+new Pomodoro();

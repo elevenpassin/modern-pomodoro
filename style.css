@@ -132,10 +132,27 @@ body {
   margin: 20px auto;
 }
 
-.history-table thead {
-  width: 300px;
+.history-table {
+  table-layout: auto;
+  width: 100%;
+  border-top: 1px solid var(--primary-color);
+  font-size: 12px;
+}
+
+.history-table thead tr {
   background: var(--secondary-dark-color);
   height: 25px;
   color: var(--text-color);
-  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.history-table thead tr th {
+  padding: 0 10px;
+}
+
+.history-table tbody tr td {
+  border-top: 1px solid var(--primary-color);
+  background: var(--background-color);
+  height: 45px;
+  text-align: center;
 }

@@ -174,13 +174,11 @@ body {
   margin: 20px;
 }
 
-.notification {
-  position: absolute;
+.notification-container {
   width: 100%;
   display: flex;
   flex-flow: row;
   justify-content: center;
-  bottom: 0;
 }
 
 .notification {
@@ -188,11 +186,9 @@ body {
   min-height: 100px;
   color: #FFF;
   width: 300px;
-  display: flex;
+  display: none;
   flex-flow: column;
   justify-content: space-around;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .notification p {

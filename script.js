@@ -2,7 +2,6 @@ if('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js');
 };
 
-
 const timer = document.querySelector("#timer");
 const timerTextTime = document.querySelector("#timer__text-time");
 const timerTextA = document.querySelector("#timer__text-a");
@@ -15,6 +14,7 @@ const editorBreakTime = document.querySelector("#editor__break-time");
 
 const historyTableBody = document.querySelector("#history-table__body");
 const clearHistoryButton = document.querySelector("#clear-history");
+const addToHomeScreenPrompt = document.querySelector("#add-to-homescreen-prompt");
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
@@ -208,3 +208,15 @@ class Pomodoro {
 }
 
 new Pomodoro();
+
+let addToHomeScreenDeferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent Chrome 67 and earlier from automatically showing the prompt
+  e.preventDefault();
+  // Stash the event so it can be triggered later.
+  addToHomeScreenDeferredPrompt = e;
+  console.log("meow");
+  // Show UI
+  addToHomeScreenPrompt.style.display = "flex";
+});

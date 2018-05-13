@@ -20,6 +20,9 @@ class Pomodoro {
     this.timerRunning = false;
     this.isEditing = false;
     this.isRound = true;
+    this.roundsElapsed = 0;
+    this.breaksElapsed = 0;
+    this.history = [];
     
     editor.style.display = "none";
     timerControlToggle.addEventListener("click", this.toggleTimer.bind(this));
@@ -30,6 +33,7 @@ class Pomodoro {
     if (!this.timerRunning) {
       this.timerRunning = true;
       this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
+      this.startTime = new Date();
       timerControlEdit.setAttribute("disabled", "");
       timerTextA.innerText = "next break in";
       timerControlToggle.innerText = "stop";
@@ -37,11 +41,13 @@ class Pomodoro {
         
         if (this.isRound && this.timeRemaining <= 0) {
           this.isRound = false;
+          this.roundsElapsed += 1;
           this.timeRemaining = this.breakTime;
         }
 
         if (!this.isRound && this.timeRemaining <= 0) {
           this.isRound = true;
+          this.breaksElapsed += 1;
           this.timeRemaining = this.roundTime;
         }
         if (this.isRound) {
@@ -55,6 +61,14 @@ class Pomodoro {
       }, SECOND);
     } else if (this.timerRunning) {
       this.timerRunning = false;
+      this.endTime = new Date();
+      this.history.push({
+        startTime: this.startTime,
+        endTime: this.endTime,
+        roundsElapsed: this.roundsElapsed,
+        breaksElapsed: this.breaksElapsed 
+      });
+      console.log(this.history);
       timerControlEdit.removeAttribute("disabled");
       this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
       clearInterval(this.timeoutRef);

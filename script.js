@@ -8,6 +8,8 @@ const editor = document.querySelector("#editor");
 const editorRoundTime = document.querySelector("#editor__round-time");
 const editorBreakTime = document.querySelector("#editor__break-time");
 
+
+
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
 
@@ -93,24 +95,29 @@ class Pomodoro {
   }
   
   mapToHistoryObject(startTime, endTime, roundsElapsed, breaksElapsed) {
+    const timeStampText = this.mapHistoryObjectText(startTime, endTime); 
     return {
-      startTime: this.startTime,
-      endTime: this.endTime,
-      roundsElapsed: this.roundsElapsed,
-      breaksElapsed: this.breaksElapsed 
+      startTime: startTime,
+      endTime: endTime,
+      roundsElapsed: roundsElapsed,
+      breaksElapsed: breaksElapsed,
+      timeStampText: timeStampText,
     };
   }
   
   mapHistoryObjectText(startTime, endTime) {
-    console.log(startTime.toLocaleString().split("").trim());
-    const [ sDate, sTime ] = startTime.toLocaleString().split(",").trim();
-    console.log(sDate, sTime);  
+    const [ sDate, sTime ] = startTime.toLocaleString().split(",").map((x) => x.trim());
+    const [ _, eTime ] = startTime.toLocaleString().split(",").map((x) => x.trim());
+    return `${sDate} - ${sTime} to ${eTime}`;
   }
   
   addToHistory(startTime, endTime, roundsElapsed, breaksElapsed) {
     const historyObject = this.mapToHistoryObject(startTime, endTime, roundsElapsed, breaksElapsed);
-    const historyObjectText = this.mapHistoryObjectText(startTime, endTime);
     this.history.push(historyObject);
+  }
+  
+  generateTable(historyArray) {
+    
   }
   
   toSeconds(timeInMilliseconds) {

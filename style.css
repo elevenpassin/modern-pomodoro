@@ -125,3 +125,9 @@ body {
 .editor input[type=number] {
     -moz-appearance:textfield;
 }
+
+.history-panel {
+  width: 300px;
+  margin: 20px auto;
+  
+}

@@ -18,7 +18,7 @@ class Pomodoro {
     this.timerRunning = false;
     this.isEditing = false;
     this.isRound = true;
-    this.timeElapsed = 0;
+    this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
     
     editor.style.display = "none";
     
@@ -33,22 +33,22 @@ class Pomodoro {
       timerControlToggle.innerText = "stop";
       this.timeoutRef = setInterval(() => {
         
-        if (this.isRound && this.timeElapsed >= this.roundTime) {
+        if (this.isRound && this.timeRemaining <= 0) {
           this.isRound = false;
-          this.timeElapsed = 0;
+          this.timeRemaining = this.breakTime;
         }
 
-        if (!this.isRound && this.timeElapsed >= this.breakTime) {
+        if (!this.isRound && this.timeRemaining <= 0) {
           this.isRound = true;
-          this.timeElapsed = 0;
+          this.timeRemaining = this.roundTime;
         }
         if (this.isRound) {
           timerTextA.innerText = "next break in";
         } else {
           timerTextA.innerText = "next round in";
         }
-        this.timeElapsed += SECOND;
-        timerTextTime.innerText = this.toSeconds(this.timeElapsed);
+        this.timeRemaining -= SECOND;
+        timerTextTime.innerText = this.toSeconds(this.timeRemaining);
       }, SECOND);
     } else if (this.timerRunning) {
       this.timerRunning = false;

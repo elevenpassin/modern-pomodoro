@@ -221,3 +221,19 @@ window.addEventListener('beforeinstallprompt', (e) => {
   // Show UI
   addToHomeScreenPrompt.style.display = "flex";
 });
+
+addToHomeScreenPrompt.addEventListener("click", () => {
+  addToHomeScreenPrompt.style.display = 'none';
+  // Show the prompt
+  addToHomeScreenDeferredPrompt.prompt();
+  // Wait for the user to respond to the prompt
+  addToHomeScreenDeferredPrompt.userChoice
+    .then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the A2HS prompt');
+      } else {
+        console.log('User dismissed the A2HS prompt');
+      }
+      addToHomeScreenDeferredPrompt = null;
+    });
+})

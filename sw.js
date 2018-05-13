@@ -7,12 +7,17 @@ if (workbox) {
   );
   
   workbox.routing.registerRoute(
+    new RegExp('^https://cdn.glitch.com/.*'),
+    workbox.strategies.cacheFirst(),
+  );
+  
+  workbox.routing.registerRoute(
     '/',
-    workbox.strategies.staleWhileRevalidate()
+    workbox.strategies.networkFirst()
   );
   
    workbox.routing.registerRoute(
-    /\.(?:js|css)$/,
-    workbox.strategies.staleWhileRevalidate()
+    /\.(?:js|css|json)$/,
+    workbox.strategies.networkFirst()
   ); 
 }

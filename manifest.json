@@ -1,6 +1,6 @@
 {
   "name": "Modern Pomododo",
-  "short_name": "MPomodoro",
+  "short_name": "Pomodoro",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#fff",
@@ -41,7 +41,7 @@
     },
     {
       "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fmstile-150x150.png?1526217612889",
-      "sizes": "270x270",
+      "sizes": "150x150",
       "type": "image/png"
     },
     {

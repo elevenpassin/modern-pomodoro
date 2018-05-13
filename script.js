@@ -9,6 +9,7 @@ const editorRoundTime = document.querySelector("#editor__round-time");
 const editorBreakTime = document.querySelector("#editor__break-time");
 
 const historyTableBody = document.querySelector("#history-table__body");
+const clearHistoryButton = document.querySelector("#clear-history");
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
@@ -31,6 +32,7 @@ class Pomodoro {
     editor.style.display = "none";
     timerControlToggle.addEventListener("click", this.toggleTimer.bind(this));
     timerControlEdit.addEventListener("click", this.toggleEditor.bind(this));
+    clearHistoryButton.addEventListener("click", this.clearHistory.bind(this));
   }
   
   toggleTimer(){
@@ -146,13 +148,11 @@ class Pomodoro {
     
     const deleteButton = document.createElement("button");
     deleteButton.classList.add("button");
-    deleteButton.classList.add("delete-button");
     deleteButton.innerText = "delete";
     
     tableRow.appendChild(tableDescTimespan);
     tableRow.appendChild(tableDescRounds);
     tableRow.appendChild(tableDescBreaks);
-    tableRow.appendChild(deleteButton);
     
     
     historyTableBody.appendChild(tableRow);
@@ -176,6 +176,12 @@ class Pomodoro {
       this.history = JSON.parse(history);
       this.generateTable();
     }
+  }
+  
+  clearHistory() {
+    this.history = [];
+    this.saveToLocalStorage();
+    this.generateTable();
   }
   
   toSeconds(timeInMilliseconds) {

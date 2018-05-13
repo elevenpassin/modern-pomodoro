@@ -163,8 +163,13 @@ body {
   background: var(--secondary-dark-color);
 }
 
-.delete-button {
-  position: relative;
-  left: 0;
-  top: 0;
+.history-table tbody tr:hover .delete-button {
+  display: flex;
+}
+
+.clear-history-container {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  margin: 20px;
 }

@@ -107,22 +107,39 @@ class Pomodoro {
   
   mapHistoryObjectText(startTime, endTime) {
     const [ sDate, sTime ] = startTime.toLocaleString().split(",").map((x) => x.trim());
-    const [ _, eTime ] = startTime.toLocaleString().split(",").map((x) => x.trim());
+    const [ _, eTime ] = endTime.toLocaleString().split(",").map((x) => x.trim());
     return `${sDate} - ${sTime} to ${eTime}`;
   }
   
   addToHistory(startTime, endTime, roundsElapsed, breaksElapsed) {
     const historyObject = this.mapToHistoryObject(startTime, endTime, roundsElapsed, breaksElapsed);
     this.history.push(historyObject);
+    this.generateTable();
   }
   
-  generateRowFromHistoryObject(object) {
+  generateRowFromHistoryObject(historyObject) {
+    const tableRow = document.createElement("tr");
+    const tableDescTimespan = document.createElement("td");
+    tableDescTimespan.innerText = historyObject.timeStampText;
+
+    const tableDescRounds = document.createElement("td");
+    tableDescRounds.innerText = historyObject.roundsElapsed;
     
+    const tableDescBreaks = document.createElement("td");
+    tableDescBreaks.innerText = historyObject.breaksElapsed;
+    
+    tableRow.appendChild(tableDescTimespan);
+    tableRow.appendChild(tableDescRounds);
+    tableRow.appendChild(tableDescBreaks);
+    
+    historyTableBody.appendChild(tableRow);
   }
   
   generateTable() {
     historyTableBody.innerHTML = "";
-    
+    this.history.map(historyObject => {
+      this.generateRowFromHistoryObject(historyObject);
+    })
   }
   
   toSeconds(timeInMilliseconds) {

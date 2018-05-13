@@ -8,7 +8,7 @@ const editor = document.querySelector("#editor");
 const editorRoundTime = document.querySelector("#editor__round-time");
 const editorBreakTime = document.querySelector("#editor__break-time");
 
-
+const historyTableBody = document.querySelector("#history-table__body");
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
@@ -116,7 +116,12 @@ class Pomodoro {
     this.history.push(historyObject);
   }
   
-  generateTable(historyArray) {
+  generateRowFromHistoryObject(object) {
+    
+  }
+  
+  generateTable() {
+    historyTableBody.innerHTML = "";
     
   }
   

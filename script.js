@@ -63,7 +63,6 @@ class Pomodoro {
       this.timerRunning = false;
       this.endTime = new Date();
       this.addToHistory(this.startTime, this.endTime, this.roundsElapsed, this.breaksElapsed);
-      this.history.push(historyObject);
       timerControlEdit.removeAttribute("disabled");
       this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
       clearInterval(this.timeoutRef);
@@ -102,8 +101,11 @@ class Pomodoro {
     };
   }
   
+  mapEntryText 
+  
   addToHistory(startTime, endTime, roundsElapsed, breaksElapsed) {
-    
+    const historyObject = this.mapToHistoryObject(startTime, endTime, roundsElapsed, breaksElapsed);
+    this.history.push(historyObject);
   }
   
   toSeconds(timeInMilliseconds) {

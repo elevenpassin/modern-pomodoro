@@ -28,7 +28,7 @@
       "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fapple-touch-icon.png?1526217612330",
       "sizes": "180x180",
       "type": "image/png"
-    }
+    },
     {
     "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fandroid-chrome-192x192.png?1526217612418",
     "sizes": "192x192",
@@ -43,11 +43,11 @@
       "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fmstile-150x150.png?1526217612889",
       "sizes": "270x270",
       "type": "image/png"
-    }
+    },
     {
       "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fsafari-pinned-tab.svg?1526217613608",
       "sizes": "347x347",
       "type": "image/png"
     }
-  ],
+  ]
 }

@@ -2,6 +2,14 @@ if('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js');
 };
 
+let deferredAddToHomeScreenPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  // Stash the event so it can be triggered later.
+  deferredAddToHomeScreenPrompt = e;
+});
+
 const timer = document.querySelector("#timer");
 const timerTextTime = document.querySelector("#timer__text-time");
 const timerTextA = document.querySelector("#timer__text-a");

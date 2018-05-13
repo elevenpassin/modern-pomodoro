@@ -5,4 +5,5 @@
   "display": "standalone",
   "background_color": "#fff",
   "description": "A simple pomodoro app with offline and history  capabilities",
+  "lang": "en",
 }

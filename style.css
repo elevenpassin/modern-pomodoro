@@ -2,6 +2,7 @@
   --primary-color: #CA6666;
   --secondary-color: #686868;
   --primary-hover-color: #B45757;
+  --primary-disabled-color: #EDA3A3;
 }
 
 body {
@@ -45,7 +46,7 @@ body {
   margin: 0 auto;
 }
 
-.timer .timer__text {
+.timer .timer__text, .editor .editor__text {
   color: var(--secondary-color);
   font-size: 24px;
   text-transform: uppercase;
@@ -91,4 +92,8 @@ body {
   background: var(--primary-hover-color);
   cursor: pointer;
   outline: none;
+}
+
+.button:disabled {
+  background: var(--primary-disabled-color);
 }

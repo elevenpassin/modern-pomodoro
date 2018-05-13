@@ -21,7 +21,6 @@ class Pomodoro {
     this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
     
     editor.style.display = "none";
-    
     timerControlToggle.addEventListener("click", this.toggleTimer.bind(this));
     timerControlEdit.addEventListener("click", this.toggleEditor.bind(this));
   }
@@ -47,14 +46,15 @@ class Pomodoro {
         } else {
           timerTextA.innerText = "next round in";
         }
+
         this.timeRemaining -= SECOND;
         timerTextTime.innerText = this.toSeconds(this.timeRemaining);
       }, SECOND);
     } else if (this.timerRunning) {
       this.timerRunning = false;
-      this.timeElapsed = 0;
+      this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
       clearInterval(this.timeoutRef);
-      timerTextTime.innerText = this.toSeconds(this.timeElapsed);
+      timerTextTime.innerText = this.toSeconds(0);
       timerTextA.innerText = "next break in";
       timerControlToggle.innerText = "start";
     }
@@ -65,10 +65,12 @@ class Pomodoro {
       this.isEditing = false;
       editor.style.display = "none";
       timer.style.display = "block";
+      timerControlEdit.innerText = "Edit";
     } else if (!this.isEditing) {
       this.isEditing = true;
       editor.style.display = "block";
       timer.style.display = "none";
+      timerControlEdit.innerText = "Save";
     }
   }
   

@@ -99,7 +99,7 @@ body {
   height: 57px;
   width: 272px;
   margin: 10px auto;
-  text-align: center
+  text-align: center;
 }
 
 .editor input:focus {
@@ -108,10 +108,20 @@ body {
 
 .editor input::-moz-placeholder
  {
-  color:  !important;
+  color: var(--secondary-light-color);
 }
 
 
 .editor input::-webkit-input-placeholder {
-  color: red;
+  color: var(--secondary-light-color);
+}
+
+.editor input[type=number]::-webkit-inner-spin-button, 
+.editor input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.editor input[type=number] {
+    -moz-appearance:textfield;
 }

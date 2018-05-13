@@ -62,13 +62,8 @@ class Pomodoro {
     } else if (this.timerRunning) {
       this.timerRunning = false;
       this.endTime = new Date();
-      this.history.push({
-        startTime: this.startTime,
-        endTime: this.endTime,
-        roundsElapsed: this.roundsElapsed,
-        breaksElapsed: this.breaksElapsed 
-      });
-      console.log(this.history);
+      this.addToHistory(this.startTime, this.endTime, this.roundsElapsed, this.breaksElapsed);
+      this.history.push(historyObject);
       timerControlEdit.removeAttribute("disabled");
       this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
       clearInterval(this.timeoutRef);
@@ -98,7 +93,16 @@ class Pomodoro {
     }
   }
   
-  addToHistory() {
+  mapToHistoryObject(startTime, endTime, roundsElapsed, breaksElapsed) {
+    return {
+      startTime: this.startTime,
+      endTime: this.endTime,
+      roundsElapsed: this.roundsElapsed,
+      breaksElapsed: this.breaksElapsed 
+    };
+  }
+  
+  addToHistory(startTime, endTime, roundsElapsed, breaksElapsed) {
     
   }
   

@@ -1,7 +1,8 @@
 :root {
   --primary-color: #CA6666;
-  --secondary-color: #686868;
+  --text-color: #686868;
   --secondary-light-color: #A5A5A5;
+  --secondary-dark-color: #F2F2F2;
   --primary-hover-color: #B45757;
   --primary-disabled-color: #EDA3A3;
   --background-color: #F9F9F9;
@@ -37,7 +38,7 @@ body {
 }
 
 .timer .timer__text, .editor .editor__text {
-  color: var(--secondary-color);
+  color: var(--text-color);
   font-size: 24px;
   text-transform: uppercase;
   text-align: center;
@@ -129,5 +130,12 @@ body {
 .history-panel {
   width: 300px;
   margin: 20px auto;
-  
+}
+
+.history-table thead {
+  width: 300px;
+  background: var(--secondary-dark-color);
+  height: 25px;
+  color: var(--text-color);
+  font-size: 12px;
 }

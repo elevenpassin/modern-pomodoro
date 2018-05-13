@@ -1,6 +1,7 @@
 :root {
   --primary-color: #CA6666;
   --secondary-color: #686868;
+  --secondary-light-color: #A5A5A5;
   --primary-hover-color: #B45757;
   --primary-disabled-color: #EDA3A3;
   --background-color: #F9F9F9;
@@ -23,18 +24,6 @@ body {
   color: var(--primary-color);
   text-transform: uppercase;
 }
-
-/* .site-heading h1:last-of-type:after {
-  content: '';
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  display: block;
-  width: 67px;
-  height: 1px;
-  margin-top: 20px;
-  background: var(--primary-color);
-} */
 
 .app-container {
   box-sizing: border-box;
@@ -99,11 +88,30 @@ body {
   background: var(--primary-disabled-color);
 }
 
+.editor {
+  text-align: center;
+}
+
 .editor input {
   background: var(--background-color);
   border: none;
   border-bottom: 1px solid var(--primary-color);
   height: 57px;
   width: 272px;
-  margin: 0 auto;
+  margin: 10px auto;
+  text-align: center
+}
+
+.editor input:focus {
+  outline: none;
+}
+
+.editor input::-moz-placeholder
+ {
+  color:  !important;
+}
+
+
+.editor input::-webkit-input-placeholder {
+  color: red;
 }

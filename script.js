@@ -144,9 +144,10 @@ class Pomodoro {
     const tableDescBreaks = document.createElement("td");
     tableDescBreaks.innerText = historyObject.breaksElapsed;
     
-    const deleteButton = document.createElement("div");
+    const deleteButton = document.createElement("button");
     deleteButton.classList.add("button");
-    deleteButton.classList.add("delete-icon");
+    deleteButton.classList.add("delete-button");
+    deleteButton.innerText = "delete";
     
     tableRow.appendChild(tableDescTimespan);
     tableRow.appendChild(tableDescRounds);

@@ -156,13 +156,15 @@ body {
   background: var(--background-color);
   height: 45px;
   text-align: center;
+  position: relative;
 }
 
 .history-table tbody tr:nth-child(even) {
   background: var(--secondary-dark-color);
 }
 
-.delete-icon {
-  background: url("https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2F_svg_md-trash.svg?1526201511129") no-repeat;
-  color: inherit;
+.delete-button {
+  position: relative;
+  left: 0;
+  top: 0;
 }

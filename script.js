@@ -108,8 +108,17 @@ class Pomodoro {
   }
   
   mapHistoryObjectText(startTime, endTime) {
-    const [ sDate, sTime ] = startTime.toLocaleString().split(",").map((x) => x.trim());
+    let [ sDate, sTime ] = startTime.toLocaleString().split(",").map((x) => x.trim());
     const [ _, eTime ] = endTime.toLocaleString().split(",").map((x) => x.trim());
+    const today = new Date();
+    if (today.toLocaleString().split(",").map(x => x.trim())[0] === sDate) {
+      sDate = "today"
+    }
+    
+    if (startTime.getDate()+1 === today.getDate()) {
+      
+    }
+        
     return `${sDate} - ${sTime} to ${eTime}`;
   }
   

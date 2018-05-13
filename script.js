@@ -8,6 +8,8 @@ const editor = document.querySelector("#editor");
 const editorRoundTime = document.querySelector("#editor__round-time");
 const editorBreakTime = document.querySelector("#editor__break-time");
 
+const historyTableBody = document.querySelector("#history-table__body");
+
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
 
@@ -20,6 +22,9 @@ class Pomodoro {
     this.timerRunning = false;
     this.isEditing = false;
     this.isRound = true;
+    this.roundsElapsed = 0;
+    this.breaksElapsed = 0;
+    this.history = [];
     
     editor.style.display = "none";
     timerControlToggle.addEventListener("click", this.toggleTimer.bind(this));
@@ -30,6 +35,7 @@ class Pomodoro {
     if (!this.timerRunning) {
       this.timerRunning = true;
       this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
+      this.startTime = new Date();
       timerControlEdit.setAttribute("disabled", "");
       timerTextA.innerText = "next break in";
       timerControlToggle.innerText = "stop";
@@ -37,11 +43,13 @@ class Pomodoro {
         
         if (this.isRound && this.timeRemaining <= 0) {
           this.isRound = false;
+          this.roundsElapsed += 1;
           this.timeRemaining = this.breakTime;
         }
 
         if (!this.isRound && this.timeRemaining <= 0) {
           this.isRound = true;
+          this.breaksElapsed += 1;
           this.timeRemaining = this.roundTime;
         }
         if (this.isRound) {
@@ -55,6 +63,8 @@ class Pomodoro {
       }, SECOND);
     } else if (this.timerRunning) {
       this.timerRunning = false;
+      this.endTime = new Date();
+      this.addToHistory(this.startTime, this.endTime, this.roundsElapsed, this.breaksElapsed);
       timerControlEdit.removeAttribute("disabled");
       this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
       clearInterval(this.timeoutRef);
@@ -84,10 +94,58 @@ class Pomodoro {
     }
   }
   
+  mapToHistoryObject(startTime, endTime, roundsElapsed, breaksElapsed) {
+    const timeStampText = this.mapHistoryObjectText(startTime, endTime); 
+    return {
+      startTime: startTime,
+      endTime: endTime,
+      roundsElapsed: roundsElapsed,
+      breaksElapsed: breaksElapsed,
+      timeStampText: timeStampText,
+    };
+  }
+  
+  mapHistoryObjectText(startTime, endTime) {
+    const [ sDate, sTime ] = startTime.toLocaleString().split(",").map((x) => x.trim());
+    const [ _, eTime ] = endTime.toLocaleString().split(",").map((x) => x.trim());
+    return `${sDate} - ${sTime} to ${eTime}`;
+  }
+  
+  addToHistory(startTime, endTime, roundsElapsed, breaksElapsed) {
+    const historyObject = this.mapToHistoryObject(startTime, endTime, roundsElapsed, breaksElapsed);
+    this.history.push(historyObject);
+    this.generateTable();
+  }
+  
+  generateRowFromHistoryObject(historyObject) {
+    const tableRow = document.createElement("tr");
+    const tableDescTimespan = document.createElement("td");
+    tableDescTimespan.innerText = historyObject.timeStampText;
+
+    const tableDescRounds = document.createElement("td");
+    tableDescRounds.innerText = historyObject.roundsElapsed;
+    
+    const tableDescBreaks = document.createElement("td");
+    tableDescBreaks.innerText = historyObject.breaksElapsed;
+    
+    tableRow.appendChild(tableDescTimespan);
+    tableRow.appendChild(tableDescRounds);
+    tableRow.appendChild(tableDescBreaks);
+    
+    historyTableBody.appendChild(tableRow);
+  }
+  
+  generateTable() {
+    historyTableBody.innerHTML = "";
+    this.history.map(historyObject => {
+      this.generateRowFromHistoryObject(historyObject);
+    })
+  }
+  
   toSeconds(timeInMilliseconds) {
     const timeInSeconds = Math.floor(timeInMilliseconds / 1000);
     return timeInSeconds > 9 ? timeInSeconds : `0${timeInSeconds}`;
   }
 }
 
-const app = new Pomodoro();
+new Pomodoro();

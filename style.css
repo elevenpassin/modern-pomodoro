@@ -1,5 +1,5 @@
 :root {
-  --primary-color: #CA6666;
+  --primary-color: #903232;
   --text-color: #686868;
   --secondary-light-color: #A5A5A5;
   --secondary-dark-color: #F2F2F2;
@@ -172,4 +172,33 @@ body {
   flex-flow: row;
   justify-content: center;
   margin: 20px;
+}
+
+.notification-container {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+}
+
+.notification {
+  background: black;
+  min-height: 100px;
+  color: #FFF;
+  width: 300px;
+  display: none;
+  flex-flow: column;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+.notification p {
+  height: 30px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.notification p, .notification .button {
+  margin: 0 auto;
 }

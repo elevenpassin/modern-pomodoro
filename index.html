@@ -5,6 +5,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="buoyantair">
+    <meta name="description" content="A simple pomodoro app with offline and history  capabilities">
+    <meta name="keywords" content="Pomodoro, Time, Management, Offline, Mobile, App">
+    <!-- webmanifest -->
+    <link rel="manifest" href="/manifest.json">
     <!-- import webpage fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <!-- normalize.css for consistency across browsers -->
@@ -13,6 +18,12 @@
     <link rel="stylesheet" href="/style.css">
     <!-- import the webpage's javascript file -->
     <script src="/script.js" defer></script>
+    
+    
+    <link rel="icon" sizes="192x192" href="https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Ficon-192x192.png?1526233540498">
+    <link rel="icon" sizes="192x192" href="https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Flogo150x150.png?1526234481139">
+    <link rel="apple-touch-icon" href="https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Ficon-192x192.png?1526233540498">
+    <meta name="msapplication-square150x150logo" content="https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Flogo150x150.png?1526234481139">
   </head>
   <body>
     <header class="site-heading">
@@ -84,6 +95,17 @@
       
       <div class="divider">
       </div>
+      
+      <section class="notification-container">
+        <div class="notification" id="add-to-homescreen-prompt">
+          <p>
+            Install this app on your device
+          </p>
+          <button class="button" id="add-to-homescreen">
+            Install
+        </button>
+        </div>
+      </section>
     </main>
   </body>
 </html>

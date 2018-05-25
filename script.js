@@ -21,8 +21,8 @@ const MINUTE = SECOND * 60;
 
 class Pomodoro {
   constructor() {
-    this.defaultRoundTime = 10 * SECOND; // 25 minutes * 60 seconds * 1000 milliseconds
-    this.defaultBreakTime = 5 * SECOND; // 5 minutes * 60 seconds * 1000 milliseconds
+    this.defaultRoundTime = 25 * MINUTE; // 25 minutes * 60 seconds * 1000 milliseconds
+    this.defaultBreakTime = 5 * MINUTE; // 5 minutes * 60 seconds * 1000 milliseconds
     this.roundTime = this.defaultRoundTime; // Initialize roundTime
     this.breakTime = this.defaultBreakTime; // Initialize breakTime
     this.timerRunning = false;
@@ -96,8 +96,8 @@ class Pomodoro {
       timer.style.display = "block";
       timerControlEdit.innerText = "Edit";
       
-      this.roundTime = editorRoundTime.value * 1000;
-      this.breakTime = editorBreakTime.value * 1000;
+      this.roundTime = editorRoundTime.value * SECOND;
+      this.breakTime = editorBreakTime.value * SECOND;
       
     } else if (!this.isEditing) {
       this.isEditing = true;
@@ -203,7 +203,8 @@ class Pomodoro {
   
   toSeconds(timeInMilliseconds) {
     const timeInSeconds = Math.floor(timeInMilliseconds / 1000);
-    return timeInSeconds > 9 ? timeInSeconds : `0${timeInSeconds}`;
+    const timeInMinutes = Math.floor(timeInSeconds / 60);
+    return timeInMinutes > 9 ? timeInMinutes : `0${timeInMinutes}`;
   }
 }
 

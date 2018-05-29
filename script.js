@@ -21,8 +21,8 @@ const MINUTE = SECOND * 60;
 
 class Pomodoro {
   constructor() {
-    this.defaultRoundTime = 10 * SECOND; // 25 minutes * 60 seconds * 1000 milliseconds
-    this.defaultBreakTime = 5 * SECOND; // 5 minutes * 60 seconds * 1000 milliseconds
+    this.defaultRoundTime = 25 * MINUTE; // 25 minutes * 60 seconds * 1000 milliseconds
+    this.defaultBreakTime = 5 * MINUTE; // 5 minutes * 60 seconds * 1000 milliseconds
     this.roundTime = this.defaultRoundTime; // Initialize roundTime
     this.breakTime = this.defaultBreakTime; // Initialize breakTime
     this.timerRunning = false;
@@ -50,6 +50,7 @@ class Pomodoro {
       timerControlEdit.setAttribute("disabled", "");
       timerTextA.innerText = "next break in";
       timerControlToggle.innerText = "stop";
+      timerTextTime.innerText = this.toMinutes(this.timeRemaining);
       this.timeoutRef = setInterval(() => {
         
         if (this.isRound && this.timeRemaining <= 0) {
@@ -69,9 +70,9 @@ class Pomodoro {
           timerTextA.innerText = "next round in";
         }
 
-        this.timeRemaining -= SECOND;
-        timerTextTime.innerText = this.toSeconds(this.timeRemaining);
-      }, SECOND);
+        this.timeRemaining -= MINUTE;
+        timerTextTime.innerText = this.toMinutes(this.timeRemaining);
+      }, MINUTE);
     } else if (this.timerRunning) {
       this.timerRunning = false;
       this.endTime = new Date();
@@ -81,7 +82,7 @@ class Pomodoro {
       clearInterval(this.timeoutRef);
       this.roundsElapsed = 0;
       this.breaksElapsed = 0;
-      timerTextTime.innerText = this.toSeconds(0);
+      timerTextTime.innerText = this.toMinutes(0);
       timerTextA.innerText = "next break in";
       timerControlToggle.innerText = "start";
       this.toggleClearHistoryButtonVisibility();
@@ -96,8 +97,8 @@ class Pomodoro {
       timer.style.display = "block";
       timerControlEdit.innerText = "Edit";
       
-      this.roundTime = editorRoundTime.value * 1000;
-      this.breakTime = editorBreakTime.value * 1000;
+      this.roundTime = editorRoundTime.value * MINUTE;
+      this.breakTime = editorBreakTime.value * MINUTE;
       
     } else if (!this.isEditing) {
       this.isEditing = true;
@@ -201,9 +202,9 @@ class Pomodoro {
     }
   }
   
-  toSeconds(timeInMilliseconds) {
-    const timeInSeconds = Math.floor(timeInMilliseconds / 1000);
-    return timeInSeconds > 9 ? timeInSeconds : `0${timeInSeconds}`;
+  toMinutes(timeInMilliseconds) {
+    const timeInMinutes = Math.floor(timeInMilliseconds / (60 * 1000));
+    return timeInMinutes > 9 ? timeInMinutes : `0${timeInMinutes}`;
   }
 }
 

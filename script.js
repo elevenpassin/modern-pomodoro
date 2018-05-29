@@ -21,8 +21,8 @@ const MINUTE = SECOND * 60;
 
 class Pomodoro {
   constructor() {
-    this.defaultRoundTime = this.toMinutes(25 * MINUTE); // 25 minutes * 60 seconds * 1000 milliseconds
-    this.defaultBreakTime = this.toMinutes(5 * MINUTE); // 5 minutes * 60 seconds * 1000 milliseconds
+    this.defaultRoundTime = 25 * MINUTE; // 25 minutes * 60 seconds * 1000 milliseconds
+    this.defaultBreakTime = 5 * MINUTE; // 5 minutes * 60 seconds * 1000 milliseconds
     this.roundTime = this.defaultRoundTime; // Initialize roundTime
     this.breakTime = this.defaultBreakTime; // Initialize breakTime
     this.timerRunning = false;
@@ -50,6 +50,7 @@ class Pomodoro {
       timerControlEdit.setAttribute("disabled", "");
       timerTextA.innerText = "next break in";
       timerControlToggle.innerText = "stop";
+      timerTextTime.innerText = this.toMinutes(this.timeRemaining);
       this.timeoutRef = setInterval(() => {
         
         if (this.isRound && this.timeRemaining <= 0) {

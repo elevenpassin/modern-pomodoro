@@ -69,9 +69,9 @@ class Pomodoro {
           timerTextA.innerText = "next round in";
         }
 
-        this.timeRemaining -= SECOND;
-        timerTextTime.innerText = this.toSeconds(this.timeRemaining);
-      }, SECOND);
+        this.timeRemaining -= MINUTE;
+        timerTextTime.innerText = this.toMinutes(this.timeRemaining);
+      }, MINUTE);
     } else if (this.timerRunning) {
       this.timerRunning = false;
       this.endTime = new Date();
@@ -81,7 +81,7 @@ class Pomodoro {
       clearInterval(this.timeoutRef);
       this.roundsElapsed = 0;
       this.breaksElapsed = 0;
-      timerTextTime.innerText = this.toSeconds(0);
+      timerTextTime.innerText = this.toMinutes(0);
       timerTextA.innerText = "next break in";
       timerControlToggle.innerText = "start";
       this.toggleClearHistoryButtonVisibility();
@@ -96,8 +96,8 @@ class Pomodoro {
       timer.style.display = "block";
       timerControlEdit.innerText = "Edit";
       
-      this.roundTime = editorRoundTime.value * SECOND;
-      this.breakTime = editorBreakTime.value * SECOND;
+      this.roundTime = editorRoundTime.value * MINUTE;
+      this.breakTime = editorBreakTime.value * MINUTE;
       
     } else if (!this.isEditing) {
       this.isEditing = true;
@@ -201,7 +201,7 @@ class Pomodoro {
     }
   }
   
-  toSeconds(timeInMilliseconds) {
+  toMinutes(timeInMilliseconds) {
     const timeInSeconds = Math.floor(timeInMilliseconds / 1000);
     const timeInMinutes = Math.floor(timeInSeconds / 60);
     return timeInMinutes > 9 ? timeInMinutes : `0${timeInMinutes}`;

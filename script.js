@@ -21,8 +21,8 @@ const MINUTE = SECOND * 60;
 
 class Pomodoro {
   constructor() {
-    this.defaultRoundTime = 25 * MINUTE; // 25 minutes * 60 seconds * 1000 milliseconds
-    this.defaultBreakTime = 5 * MINUTE; // 5 minutes * 60 seconds * 1000 milliseconds
+    this.defaultRoundTime = this.toMinutes(25 * MINUTE); // 25 minutes * 60 seconds * 1000 milliseconds
+    this.defaultBreakTime = this.toMinutes(5 * MINUTE); // 5 minutes * 60 seconds * 1000 milliseconds
     this.roundTime = this.defaultRoundTime; // Initialize roundTime
     this.breakTime = this.defaultBreakTime; // Initialize breakTime
     this.timerRunning = false;
@@ -202,8 +202,7 @@ class Pomodoro {
   }
   
   toMinutes(timeInMilliseconds) {
-    const timeInSeconds = Math.floor(timeInMilliseconds / 1000);
-    const timeInMinutes = Math.floor(timeInSeconds / 60);
+    const timeInMinutes = Math.floor(timeInMilliseconds / (60 * 1000));
     return timeInMinutes > 9 ? timeInMinutes : `0${timeInMinutes}`;
   }
 }

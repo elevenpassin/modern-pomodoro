@@ -21,7 +21,8 @@ const aboutContent = document.querySelector("#about-content");
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
-const is
+let isShowingAbout = false;
+
 class Pomodoro {
   constructor() {
     this.defaultRoundTime = 25 * MINUTE; // 25 minutes * 60 seconds * 1000 milliseconds
@@ -212,11 +213,22 @@ class Pomodoro {
 }
 
 function handleAboutToggle () {
-  
+  if (isShowingAbout) {
+    aboutContent.style.display = "none";
+    isShowingAbout = false;
+  } else if (!isShowingAbout) {
+    aboutContent.style.display = "block";
+    isShowingAbout = true;
+  }
+  console.log("done", aboutContent.style.display);
 }
 
 // Start the app
 new Pomodoro();
+
+// Bind non app related triggers
+aboutContent.style.display = "none";
+aboutButton.addEventListener("click", handleAboutToggle);
 
 let addToHomeScreenDeferredPrompt;
 

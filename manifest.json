@@ -11,6 +11,41 @@
   "lang": "en-US",
   "icons": [
     {
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fios-appicon-180-180.png?1528173882168",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "",
+      "sizes": "",
+      "type": "image/png"
+    },
+    {
+      "src": "",
+      "sizes": "",
+      "type": "image/png"
+    },
+    {
+      "src": "",
+      "sizes": "",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fios-appicon-120-120.png?1528173794329",
+      "sizes": "120x120",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fios-appicon-76-76.png?1528173755444",
+      "sizes": "76x76",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fandroid-launchericon-48-48.png?1528173623539",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
       "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Ficon-72x72.png?1526233540954",
       "sizes": "72x72",
       "type": "image/png"

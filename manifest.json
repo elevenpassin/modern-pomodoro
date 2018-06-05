@@ -16,8 +16,23 @@
       "type": "image/png"
     },
     {
-      "src": "",
-      "sizes": "",
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fmodern%20pomodoro%20logo%201024x1024.png?1528174206992",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fmodern%20pomodoro%20launch%20screens%20ios%20750x1334.png?1528174551207",
+      "sizes": "750x1334",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fmodern%20pomodoro%20launch%20screens%20ios%201334x750.png?1528174655888",
+      "sizes": "1334x750",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fmodern%20pomodoro%20launch%20screens%20ios%201242x2208.png?1528174767757",
+      "sizes": "1242x2208",
       "type": "image/png"
     },
     {

@@ -215,6 +215,7 @@ main > section {
 
 .about-content {
   width: 300px;
+  margin-top: 20px;
   min-height: 150px;
   border: 1px solid var(--primary-color);
   display: flex;

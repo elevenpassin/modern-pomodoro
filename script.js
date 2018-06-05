@@ -16,9 +16,12 @@ const historyTableBody = document.querySelector("#history-table__body");
 const clearHistoryButton = document.querySelector("#clear-history");
 const addToHomeScreenPrompt = document.querySelector("#add-to-homescreen-prompt");
 
+const aboutButton = document.querySelector("#about-toggle");
+const aboutContent = document.querySelector("#about-content");
+
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
-
+const is
 class Pomodoro {
   constructor() {
     this.defaultRoundTime = 25 * MINUTE; // 25 minutes * 60 seconds * 1000 milliseconds
@@ -208,6 +211,11 @@ class Pomodoro {
   }
 }
 
+function handleAboutToggle () {
+  
+}
+
+// Start the app
 new Pomodoro();
 
 let addToHomeScreenDeferredPrompt;
@@ -215,10 +223,8 @@ let addToHomeScreenDeferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
   // Prevent Chrome 67 and earlier from automatically showing the prompt
   e.preventDefault();
-  console.log("CAN YOU SEE ME");
   // Stash the event so it can be triggered later.
   addToHomeScreenDeferredPrompt = e;
-  console.log("meow");
   // Show UI
   addToHomeScreenPrompt.style.display = "flex";
 });

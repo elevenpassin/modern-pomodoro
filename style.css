@@ -37,6 +37,11 @@ body {
   margin: 0 auto;
 }
 
+main > section {
+  width: 300px;
+  margin: 0 auto;
+}
+
 .timer .timer__text, .editor .editor__text {
   color: var(--text-color);
   font-size: 24px;
@@ -77,6 +82,11 @@ body {
   text-align: center;
   align-items: center;
   transition: background 0.25s;
+}
+
+.align-center {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .button:hover {

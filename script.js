@@ -16,17 +16,15 @@ const historyTableBody = document.querySelector("#history-table__body");
 const clearHistoryButton = document.querySelector("#clear-history");
 const addToHomeScreenPrompt = document.querySelector("#add-to-homescreen-prompt");
 
-<<<<<<< HEAD
 const aboutButton = document.querySelector("#about-toggle");
 const aboutContent = document.querySelector("#about-content");
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
 let isShowingAbout = false;
-=======
+
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
->>>>>>> upstream/master
 
 class Pomodoro {
   constructor() {
@@ -217,7 +215,6 @@ class Pomodoro {
   }
 }
 
-<<<<<<< HEAD
 function handleAboutToggle () {
   if (isShowingAbout) {
     aboutContent.style.display = "none";
@@ -236,24 +233,15 @@ new Pomodoro();
 aboutContent.style.display = "none";
 aboutButton.addEventListener("click", handleAboutToggle);
 
-=======
-new Pomodoro();
-
->>>>>>> upstream/master
 let addToHomeScreenDeferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
   // Prevent Chrome 67 and earlier from automatically showing the prompt
   e.preventDefault();
-<<<<<<< HEAD
   // Stash the event so it can be triggered later.
   addToHomeScreenDeferredPrompt = e;
-=======
-  console.log("CAN YOU SEE ME");
   // Stash the event so it can be triggered later.
   addToHomeScreenDeferredPrompt = e;
-  console.log("meow");
->>>>>>> upstream/master
   // Show UI
   addToHomeScreenPrompt.style.display = "flex";
 });

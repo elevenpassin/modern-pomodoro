@@ -11,7 +11,6 @@
   "lang": "en-US",
   "icons": [
     {
-<<<<<<< HEAD
       "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Fios-appicon-180-180.png?1528173882168",
       "sizes": "180x180",
       "type": "image/png"
@@ -82,8 +81,6 @@
       "type": "image/png"
     },
     {
-=======
->>>>>>> upstream/master
       "src": "https://cdn.glitch.com/30b87c3a-fd82-47b3-892e-9aeff2dda02f%2Ficon-72x72.png?1526233540954",
       "sizes": "72x72",
       "type": "image/png"

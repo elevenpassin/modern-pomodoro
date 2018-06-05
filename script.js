@@ -217,7 +217,7 @@ function handleAboutToggle () {
     aboutContent.style.display = "none";
     isShowingAbout = false;
   } else if (!isShowingAbout) {
-    aboutContent.style.display = "block";
+    aboutContent.style.display = "flex";
     isShowingAbout = true;
   }
   console.log("done", aboutContent.style.display);

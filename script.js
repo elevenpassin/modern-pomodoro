@@ -23,9 +23,6 @@ const SECOND = 1000;
 const MINUTE = SECOND * 60;
 let isShowingAbout = false;
 
-const SECOND = 1000;
-const MINUTE = SECOND * 60;
-
 class Pomodoro {
   constructor() {
     this.defaultRoundTime = 25 * MINUTE; // 25 minutes * 60 seconds * 1000 milliseconds

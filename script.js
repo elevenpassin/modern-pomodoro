@@ -1,6 +1,6 @@
-if('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js');
-};
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./sw.js");
+}
 
 const timer = document.querySelector("#timer");
 const timerTextTime = document.querySelector("#timer__text-time");
@@ -14,7 +14,9 @@ const editorBreakTime = document.querySelector("#editor__break-time");
 
 const historyTableBody = document.querySelector("#history-table__body");
 const clearHistoryButton = document.querySelector("#clear-history");
-const addToHomeScreenPrompt = document.querySelector("#add-to-homescreen-prompt");
+const addToHomeScreenPrompt = document.querySelector(
+  "#add-to-homescreen-prompt"
+);
 
 const aboutButton = document.querySelector("#about-toggle");
 const aboutContent = document.querySelector("#about-content");
@@ -35,18 +37,18 @@ class Pomodoro {
     this.roundsElapsed = 0;
     this.breaksElapsed = 0;
     this.history = [];
-    
+
     this.loadFromLocalStorage();
-    
+
     editor.style.display = "none";
     this.toggleClearHistoryButtonVisibility();
-    
+
     timerControlToggle.addEventListener("click", this.toggleTimer.bind(this));
     timerControlEdit.addEventListener("click", this.toggleEditor.bind(this));
     clearHistoryButton.addEventListener("click", this.clearHistory.bind(this));
   }
-  
-  toggleTimer(){
+
+  toggleTimer() {
     if (!this.timerRunning) {
       this.timerRunning = true;
       this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
@@ -56,7 +58,6 @@ class Pomodoro {
       timerControlToggle.innerText = "stop";
       timerTextTime.innerText = this.toMinutes(this.timeRemaining);
       this.timeoutRef = setInterval(() => {
-        
         if (this.isRound && this.timeRemaining <= 0) {
           this.isRound = false;
           this.roundsElapsed += 1;
@@ -80,7 +81,12 @@ class Pomodoro {
     } else if (this.timerRunning) {
       this.timerRunning = false;
       this.endTime = new Date();
-      this.addToHistory(this.startTime, this.endTime, this.roundsElapsed, this.breaksElapsed);
+      this.addToHistory(
+        this.startTime,
+        this.endTime,
+        this.roundsElapsed,
+        this.breaksElapsed
+      );
       timerControlEdit.removeAttribute("disabled");
       this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
       clearInterval(this.timeoutRef);
@@ -92,7 +98,7 @@ class Pomodoro {
       this.toggleClearHistoryButtonVisibility();
     }
   }
-  
+
   toggleEditor() {
     if (this.isEditing) {
       this.isEditing = false;
@@ -100,10 +106,9 @@ class Pomodoro {
       editor.style.display = "none";
       timer.style.display = "block";
       timerControlEdit.innerText = "Edit";
-      
+
       this.roundTime = editorRoundTime.value * MINUTE;
       this.breakTime = editorBreakTime.value * MINUTE;
-      
     } else if (!this.isEditing) {
       this.isEditing = true;
       timerControlToggle.setAttribute("disabled", "");
@@ -112,42 +117,58 @@ class Pomodoro {
       timerControlEdit.innerText = "Save";
     }
   }
-  
+
   mapToHistoryObject(startTime, endTime, roundsElapsed, breaksElapsed) {
-    const timeStampText = this.mapHistoryObjectText(startTime, endTime); 
+    const timeStampText = this.mapHistoryObjectText(startTime, endTime);
     return {
       startTime: startTime,
       endTime: endTime,
       roundsElapsed: roundsElapsed,
       breaksElapsed: breaksElapsed,
-      timeStampText: timeStampText,
+      timeStampText: timeStampText
     };
   }
-  
+
   mapHistoryObjectText(startTime, endTime) {
-    let [ sDate, sTime ] = startTime.toLocaleString().split(",").map((x) => x.trim());
-    const [ _, eTime ] = endTime.toLocaleString().split(",").map((x) => x.trim());
+    let [sDate, sTime] = startTime
+      .toLocaleString()
+      .split(isEdge ? " " : ",")
+      .map(x => x.trim());
+    const [_, eTime] = endTime
+      .toLocaleString()
+      .split(isEdge ? " " : ",")
+      .map(x => x.trim());
     const today = new Date();
-    if (today.toLocaleString().split(",").map(x => x.trim())[0] === sDate) {
+    if (
+      today
+        .toLocaleString()
+        .split(",")
+        .map(x => x.trim())[0] === sDate
+    ) {
       sDate = "today";
     }
-    
-    const isYesterday = startTime.getDate()+1 === today.getDate();
-    const isStartTimeEndOfMonth = startTime.getMonth()+1 === today.getMonth();
+
+    const isYesterday = startTime.getDate() + 1 === today.getDate();
+    const isStartTimeEndOfMonth = startTime.getMonth() + 1 === today.getMonth();
     if (isYesterday || isStartTimeEndOfMonth) {
       sDate = "yesterday";
     }
 
     return `${sDate} - ${sTime} to ${eTime}`;
   }
-  
+
   addToHistory(startTime, endTime, roundsElapsed, breaksElapsed) {
-    const historyObject = this.mapToHistoryObject(startTime, endTime, roundsElapsed, breaksElapsed);
+    const historyObject = this.mapToHistoryObject(
+      startTime,
+      endTime,
+      roundsElapsed,
+      breaksElapsed
+    );
     this.history.push(historyObject);
     this.generateTable();
     this.saveToLocalStorage();
   }
-  
+
   generateRowFromHistoryObject(historyObject) {
     const tableRow = document.createElement("tr");
     const tableDescTimespan = document.createElement("td");
@@ -155,49 +176,48 @@ class Pomodoro {
 
     const tableDescRounds = document.createElement("td");
     tableDescRounds.innerText = historyObject.roundsElapsed;
-    
+
     const tableDescBreaks = document.createElement("td");
     tableDescBreaks.innerText = historyObject.breaksElapsed;
-    
+
     const deleteButton = document.createElement("button");
     deleteButton.classList.add("button");
     deleteButton.innerText = "delete";
-    
+
     tableRow.appendChild(tableDescTimespan);
     tableRow.appendChild(tableDescRounds);
     tableRow.appendChild(tableDescBreaks);
-    
-    
+
     historyTableBody.appendChild(tableRow);
   }
-  
+
   generateTable() {
     historyTableBody.innerHTML = "";
     this.history.map(historyObject => {
       this.generateRowFromHistoryObject(historyObject);
-    })
+    });
   }
-  
+
   saveToLocalStorage() {
     window.localStorage.setItem("history", JSON.stringify(this.history));
   }
-  
+
   loadFromLocalStorage() {
     const history = window.localStorage.getItem("history");
-    
+
     if (history) {
       this.history = JSON.parse(history);
       this.generateTable();
     }
   }
-  
+
   clearHistory() {
     this.history = [];
     this.saveToLocalStorage();
     this.generateTable();
     this.toggleClearHistoryButtonVisibility();
   }
-  
+
   toggleClearHistoryButtonVisibility() {
     if (this.history.length > 0) {
       clearHistoryButton.style.display = "flex";
@@ -205,14 +225,14 @@ class Pomodoro {
       clearHistoryButton.style.display = "none";
     }
   }
-  
+
   toMinutes(timeInMilliseconds) {
     const timeInMinutes = Math.floor(timeInMilliseconds / (60 * 1000));
     return timeInMinutes > 9 ? timeInMinutes : `0${timeInMinutes}`;
   }
 }
 
-function handleAboutToggle () {
+function handleAboutToggle() {
   if (isShowingAbout) {
     aboutContent.style.display = "none";
     isShowingAbout = false;
@@ -232,7 +252,7 @@ aboutButton.addEventListener("click", handleAboutToggle);
 
 let addToHomeScreenDeferredPrompt;
 
-window.addEventListener('beforeinstallprompt', (e) => {
+window.addEventListener("beforeinstallprompt", e => {
   // Prevent Chrome 67 and earlier from automatically showing the prompt
   e.preventDefault();
   // Stash the event so it can be triggered later.
@@ -244,17 +264,16 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 addToHomeScreenPrompt.addEventListener("click", () => {
-  addToHomeScreenPrompt.style.display = 'none';
+  addToHomeScreenPrompt.style.display = "none";
   // Show the prompt
   addToHomeScreenDeferredPrompt.prompt();
   // Wait for the user to respond to the prompt
-  addToHomeScreenDeferredPrompt.userChoice
-    .then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the A2HS prompt');
-      } else {
-        console.log('User dismissed the A2HS prompt');
-      }
-      addToHomeScreenDeferredPrompt = null;
-    });
-})
+  addToHomeScreenDeferredPrompt.userChoice.then(choiceResult => {
+    if (choiceResult.outcome === "accepted") {
+      console.log("User accepted the A2HS prompt");
+    } else {
+      console.log("User dismissed the A2HS prompt");
+    }
+    addToHomeScreenDeferredPrompt = null;
+  });
+});

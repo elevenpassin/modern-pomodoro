@@ -1,3 +1,9 @@
+// Internet Explorer 6-11
+const isIE = /*@cc_on!@*/false || !!document.documentMode;
+
+// Edge 20+
+const isEdge = !isIE && !!window.StyleMedia;
+
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js");
 }
@@ -142,7 +148,7 @@ class Pomodoro {
     if (
       today
         .toLocaleString()
-        .split(",")
+        .split(isEdge ? " " : ",")
         .map(x => x.trim())[0] === sDate
     ) {
       sDate = "today";

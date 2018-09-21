@@ -57,13 +57,15 @@ class Pomodoro {
   toggleTimer() {
     if (!this.timerRunning) {
       this.timerRunning = true;
-      this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
+      this.timeRemaining = this.roundTime;
       this.startTime = new Date();
       timerControlEdit.setAttribute("disabled", "");
       timerTextA.innerText = "next break in";
       timerControlToggle.innerText = "stop";
       timerTextTime.innerText = this.toMinutes(this.timeRemaining);
       this.timeoutRef = setInterval(() => {
+        this.timeRemaining -= MINUTE;
+
         if (this.isRound && this.timeRemaining <= 0) {
           this.isRound = false;
           this.roundsElapsed += 1;
@@ -81,7 +83,6 @@ class Pomodoro {
           timerTextA.innerText = "next round in";
         }
 
-        this.timeRemaining -= MINUTE;
         timerTextTime.innerText = this.toMinutes(this.timeRemaining);
       }, MINUTE);
     } else if (this.timerRunning) {
@@ -235,6 +236,10 @@ class Pomodoro {
   toMinutes(timeInMilliseconds) {
     const timeInMinutes = Math.floor(timeInMilliseconds / (60 * 1000));
     return timeInMinutes > 9 ? timeInMinutes : `0${timeInMinutes}`;
+  }
+
+  toSeconds(timeInMilliseconds) {
+    return Math.floor(timeInMilliseconds / 1000);
   }
 }
 

@@ -8,6 +8,8 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js");
 }
 
+const audioElement = document.querySelector('audio');
+
 const timer = document.querySelector("#timer");
 const timerTextTime = document.querySelector("#timer__text-time");
 const timerTextA = document.querySelector("#timer__text-a");
@@ -70,12 +72,14 @@ class Pomodoro {
           this.isRound = false;
           this.roundsElapsed += 1;
           this.timeRemaining = this.breakTime;
+          audioElement.play();
         }
 
         if (!this.isRound && this.timeRemaining <= 0) {
           this.isRound = true;
           this.breaksElapsed += 1;
           this.timeRemaining = this.roundTime;
+          audioElement.play();
         }
         if (this.isRound) {
           timerTextA.innerText = "next break in";

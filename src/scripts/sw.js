@@ -14,7 +14,7 @@ if (workbox) {
       cacheName: 'html-cache',
     })
   );
-  
+
   workbox.routing.registerRoute(
     // Cache CSS files
     /.*\.css/,
@@ -24,7 +24,7 @@ if (workbox) {
       cacheName: 'css-cache',
     })
   );
-  
+
   workbox.routing.registerRoute(
     // Cache JS/JSON files
     /.*\.(js)/,

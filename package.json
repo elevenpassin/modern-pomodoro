@@ -1,0 +1,36 @@
+{
+  "name": "modern-pomodoro",
+  "version": "1.0.0",
+  "description": "Modern Pomodoro =================",
+  "main": "responsiveColorTheme.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/buoyantair/modern-pomodoro.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/buoyantair/modern-pomodoro/issues"
+  },
+  "homepage": "https://gitlab.com/buoyantair/modern-pomodoro#README",
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "autoprefixer": "^9.3.1",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0-beta.2",
+    "gulp-clean-css": "^3.10.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.1",
+    "postcss-preset-env": "^6.4.0",
+    "precss": "^3.1.2"
+  }
+}

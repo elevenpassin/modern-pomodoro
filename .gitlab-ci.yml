@@ -10,8 +10,7 @@ pages:
   stage: deploy
   script:
   - npm run build
-  - mkdir public
-  - cp -r ./dist/**/* public
+  - mv dist public
   artifacts:
     paths:
     - public

@@ -1,0 +1,234 @@
+:root {
+  --primary-color: #903232;
+  --text-color: #686868;
+  --secondary-light-color: #A5A5A5;
+  --secondary-dark-color: #F2F2F2;
+  --primary-hover-color: #B45757;
+  --primary-disabled-color: #EDA3A3;
+  --background-color: #F9F9F9;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  min-width: 300px;
+}
+
+.dark_theme {
+  .red {
+    background: red;
+  }
+}
+
+.default_theme {
+}
+
+.site-heading {
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.site-heading h1 {
+  margin: 0;
+  font-size: 24px;
+  color: var(--primary-color);
+  text-transform: uppercase;
+}
+
+.app-container {
+  box-sizing: border-box;
+  width: 300px;
+  height: 300px;
+  border: 1px solid var(--primary-color);
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+main > section {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.timer .timer__text, .editor .editor__text {
+  color: var(--text-color);
+  font-size: 24px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.timer .timer__text--large {
+  font-size: 144px;
+}
+
+.divider {
+  display: block;
+  width: 67px;
+  height: 1px;
+  margin: 20px auto;
+  background: var(--primary-color);
+}
+
+.timer-controls {
+  width: 300px;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.button {
+  width: 126px;
+  height: 45px;
+  border: none;
+  background: var(--primary-color);
+  color: #FFF;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  text-transform: uppercase;
+  text-align: center;
+  align-items: center;
+  transition: background 0.25s;
+}
+
+.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button:hover {
+  background: var(--primary-hover-color);
+  cursor: pointer;
+  outline: none;
+  color: #FFF;
+}
+
+.button:disabled {
+  background: var(--primary-disabled-color);
+}
+
+.editor {
+  text-align: center;
+}
+
+.editor input {
+  background: var(--background-color);
+  border: none;
+  border-bottom: 1px solid var(--primary-color);
+  height: 57px;
+  width: 272px;
+  margin: 10px auto;
+  text-align: center;
+}
+
+.editor input:focus {
+  outline: none;
+}
+
+.editor input::-moz-placeholder
+ {
+  color: var(--secondary-light-color);
+}
+
+
+.editor input::-webkit-input-placeholder {
+  color: var(--secondary-light-color);
+}
+
+.editor input[type=number]::-webkit-inner-spin-button, 
+.editor input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.editor input[type=number] {
+    -moz-appearance:textfield;
+}
+
+.history-panel {
+  width: 300px;
+  margin: 20px auto;
+}
+
+.history-table {
+  table-layout: auto;
+  width: 100%;
+  border-top: 1px solid var(--primary-color);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.history-table thead tr {
+  background: var(--secondary-dark-color);
+  height: 25px;
+  color: var(--text-color);
+}
+
+.history-table thead tr th {
+  padding: 0 10px;
+}
+
+.history-table tbody tr {
+  border-top: 1px solid var(--primary-color);
+  background: var(--background-color);
+  height: 45px;
+  text-align: center;
+  position: relative;
+}
+
+.history-table tbody tr:nth-child(even) {
+  background: var(--secondary-dark-color);
+}
+
+.history-table tbody tr:hover .delete-button {
+  display: flex;
+}
+
+.clear-history-container {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  margin: 20px;
+}
+
+.notification-container {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+}
+
+.notification {
+  background: black;
+  min-height: 100px;
+  color: #FFF;
+  width: 300px;
+  display: none;
+  flex-flow: column;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+.notification p {
+  height: 30px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.notification p, .notification .button {
+  margin: 0 auto;
+}
+
+.about-content {
+  width: 300px;
+  margin-top: 20px;
+  min-height: 150px;
+  border: 1px solid var(--primary-color);
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  text-align: center;
+}

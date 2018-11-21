@@ -6,7 +6,7 @@
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/modern-pomodoro/",
-  "start_url": "/",
+  "start_url": "/modern-pomodoro/",
   "description": "A simple pomodoro app with offline and history  capabilities",
   "lang": "en-US",
   "icons": [

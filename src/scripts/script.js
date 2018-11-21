@@ -5,7 +5,7 @@ const isIE = /*@cc_on!@*/false || !!document.documentMode;
 const isEdge = !isIE && !!window.StyleMedia;
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./sw.js");
+  navigator.serviceWorker.register("../sw.js");
 }
 
 const audioElement = document.querySelector('audio');

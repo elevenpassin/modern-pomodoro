@@ -20,6 +20,10 @@ const paths = {
     src: 'src/images/**/*',
     dest: 'dist/images/'
   },
+  sw: {
+    src: 'src/sw.js',
+    dest: 'dist/sw.js'
+  },
   otherFiles: {
     src: [
       'src/*.html',
@@ -29,6 +33,11 @@ const paths = {
     ],
     dest: 'dist'
   }
+}
+
+function sw() {
+  return gulp.src(paths.sw.src, { since: gulp.lastRun(sw) })
+    .pipe(gulp.dest(paths.sw.dest));
 }
 
 function images() {
@@ -78,17 +87,19 @@ function watch() {
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.images.src, images);
   gulp.watch(paths.otherFiles.src, otherFiles);
+  gulp.watch(paths.sw.src, sw);
 }
 
 
 
-const build = gulp.series(clean, gulp.parallel(styles, scripts, images, otherFiles));
+const build = gulp.series(clean, gulp.parallel(styles, scripts, images, otherFiles, sw));
 
 exports.clean = clean;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.images = images;
 exports.otherFiles = otherFiles;
+exports.sw = sw;
 exports.watch = watch;
 exports.build = build;
 exports.default = build;

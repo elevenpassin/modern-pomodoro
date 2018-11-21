@@ -1,10 +1,11 @@
 {
   "name": "modern-pomodoro",
   "version": "1.0.0",
-  "description": "Modern Pomodoro =================",
-  "main": "responsiveColorTheme.js",
+  "description": "Modern Pomodoro",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gulp",
+    "watch": "gulp watch"
   },
   "repository": {
     "type": "git",
@@ -12,7 +13,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "AGPLv3",
   "bugs": {
     "url": "https://gitlab.com/buoyantair/modern-pomodoro/issues"
   },

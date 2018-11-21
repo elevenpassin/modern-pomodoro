@@ -22,7 +22,7 @@ const paths = {
   },
   sw: {
     src: 'src/sw.js',
-    dest: 'dist/sw.js'
+    dest: 'dist'
   },
   otherFiles: {
     src: [

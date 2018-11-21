@@ -13,7 +13,7 @@ if (workbox) {
   );
 
   workbox.routing.registerRoute(
-    '/',
+    '/modern-pomodoro/',
     workbox.strategies.networkFirst({
       cacheName: 'html-cache',
     })

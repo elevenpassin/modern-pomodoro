@@ -61,8 +61,10 @@ function styles() {
 
 function scripts() {
   return gulp.src(paths.scripts.src, { sourcemaps: true, since: gulp.lastRun(scripts) })
+    .pipe(sourcemaps.init())
     .pipe(babel())
     .pipe(uglify())
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.scripts.dest));
 }
 

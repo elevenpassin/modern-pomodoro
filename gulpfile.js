@@ -25,7 +25,7 @@ const paths = {
       'src/*.html',
       'src/*.mp3',
       'src/*.json',
-      'src/*.xml'
+      'src/*.ico'
     ],
     dest: 'dist'
   }

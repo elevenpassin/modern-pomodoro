@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [3.0.0](https://gitlab.com/buoyantair/modern-pomodoro/compare/v2.0.0...v3.0.0) (2019-03-25)
+
+
+### Code Refactoring
+
+* Replace the whole website with the vuejs app ([91170fe](https://gitlab.com/buoyantair/modern-pomodoro/commit/91170fe))
+
+
+### BREAKING CHANGES
+
+* From this point onwards, the previous app/code is gone. Although I will
+be using the old code in various pages over time as I see fit.
+
+This is basically a completely new app now.
+
+
+
 # [2.0.0](https://gitlab.com/buoyantair/modern-pomodoro/compare/v1.0.1...v2.0.0) (2019-03-25)
 
 

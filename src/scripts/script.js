@@ -127,6 +127,9 @@ function saveToLocalStorage() {
 }
 
 function addToHistory(startTime, endTime, roundsElapsed, breaksElapsed) {
+  if (roundsElapsed == 0 && breaksElapsed == 0) {
+    return;
+  }
   const historyObject = mapToHistoryObject(
     startTime,
     endTime,

@@ -171,9 +171,24 @@ function toggleTimer() {
       if (!isRound && timeRemaining <= 0) {
         isRound = true;
         breaksElapsed += 1;
-        timeRemaining = roundTime;
+        timeRemaining = 0;
         audioElement.play();
+        timerRunning = false;
+        endTime = new Date();
+        addToHistory(
+          startTime,
+          endTime,
+          roundsElapsed,
+          breaksElapsed
+        );
+        timerControlEdit.removeAttribute("disabled");
+        clearInterval(timeoutRef);
+        roundsElapsed = 0;
+        breaksElapsed = 0;
+        timerControlToggle.innerText = "start";
+        toggleClearHistoryButtonVisibility();
       }
+
       if (isRound) {
         timerTextA.innerText = "next break in";
       } else {
@@ -197,7 +212,7 @@ function toggleTimer() {
     roundsElapsed = 0;
     breaksElapsed = 0;
     timerTextTime.innerText = toMinutes(0);
-    timerTextA.innerText = "next break in";
+    timerTextA.innerText = "next round in";
     timerControlToggle.innerText = "start";
     toggleClearHistoryButtonVisibility();
   }

@@ -9,7 +9,7 @@ const uglify = require('gulp-uglify');
 
 const paths = {
   styles: {
-    src: 'src/styles/**/*.pcss',
+    src: 'src/styles/**/*.{pcss,css}',
     dest: 'dist/styles/'
   },
   scripts: {
@@ -20,10 +20,10 @@ const paths = {
     src: 'src/images/**/*',
     dest: 'dist/images/'
   },
-  sw: {
-    src: 'src/sw.js',
-    dest: 'dist'
-  },
+  // sw: {
+  //   src: 'src/sw.js',
+  //   dest: 'dist'
+  // },
   otherFiles: {
     src: [
       'src/*.html',
@@ -35,10 +35,10 @@ const paths = {
   }
 }
 
-function sw() {
-  return gulp.src(paths.sw.src, { since: gulp.lastRun(sw) })
-    .pipe(gulp.dest(paths.sw.dest));
-}
+// function sw() {
+//   return gulp.src(paths.sw.src, { since: gulp.lastRun(sw) })
+//     .pipe(gulp.dest(paths.sw.dest));
+// }
 
 function images() {
   return gulp.src(paths.images.src, { since: gulp.lastRun(images) })
@@ -64,8 +64,8 @@ function styles() {
         path.extname = '.css'
       })
     )
-    .pipe( sourcemaps.write('.') )
-    .pipe( gulp.dest(paths.styles.dest) );
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(paths.styles.dest));
 }
 
 function scripts() {
@@ -87,19 +87,19 @@ function watch() {
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.images.src, images);
   gulp.watch(paths.otherFiles.src, otherFiles);
-  gulp.watch(paths.sw.src, sw);
+  // gulp.watch(paths.sw.src, sw);
 }
 
 
 
-const build = gulp.series(clean, gulp.parallel(styles, scripts, images, otherFiles, sw));
+const build = gulp.series(clean, gulp.parallel(styles, scripts, images, otherFiles));
 
 exports.clean = clean;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.images = images;
 exports.otherFiles = otherFiles;
-exports.sw = sw;
+// exports.sw = sw;
 exports.watch = watch;
 exports.build = build;
 exports.default = build;

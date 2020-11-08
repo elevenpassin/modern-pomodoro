@@ -5,7 +5,7 @@ const isIE = /*@cc_on!@*/false || !!document.documentMode;
 const isEdge = !isIE && !!window.StyleMedia;
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./sw.js");
+  navigator.serviceWorker.register("./scripts/sw.js");
 }
 
 const audioElement = document.querySelector('audio');
@@ -31,220 +31,211 @@ const aboutContent = document.querySelector("#about-content");
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
+const defaultRoundTime = 25 * MINUTE; // 25 minutes * 60 seconds * 1000 milliseconds
+const defaultBreakTime = 5 * MINUTE; // 5 minutes * 60 seconds * 1000 milliseconds
+let appHistory = [];
+
+let roundTime = defaultRoundTime; // Initialize roundTime
+let breakTime = defaultBreakTime; // Initialize breakTime
 let isShowingAbout = false;
+let timerRunning = false;
+let timeRemaining = 0;
+let isEditing = false;
+let isRound = true;
+let roundsElapsed = 0;
+let breaksElapsed = 0;
+let startTime = 0;
+let endTime = 0;
+let timeoutRef = null;
 
-class Pomodoro {
-  constructor() {
-    this.defaultRoundTime = 25 * MINUTE; // 25 minutes * 60 seconds * 1000 milliseconds
-    this.defaultBreakTime = 5 * MINUTE; // 5 minutes * 60 seconds * 1000 milliseconds
-    this.roundTime = this.defaultRoundTime; // Initialize roundTime
-    this.breakTime = this.defaultBreakTime; // Initialize breakTime
-    this.timerRunning = false;
-    this.isEditing = false;
-    this.isRound = true;
-    this.roundsElapsed = 0;
-    this.breaksElapsed = 0;
-    this.history = [];
+function toMinutes(timeInMilliseconds) {
+  const timeInMinutes = Math.floor(timeInMilliseconds / (60 * 1000));
+  return timeInMinutes > 9 ? timeInMinutes : `0${timeInMinutes}`;
+}
 
-    this.loadFromLocalStorage();
-
-    editor.style.display = "none";
-    this.toggleClearHistoryButtonVisibility();
-
-    timerControlToggle.addEventListener("click", this.toggleTimer.bind(this));
-    timerControlEdit.addEventListener("click", this.toggleEditor.bind(this));
-    clearHistoryButton.addEventListener("click", this.clearHistory.bind(this));
-  }
-
-  toggleTimer() {
-    if (!this.timerRunning) {
-      this.timerRunning = true;
-      this.timeRemaining = this.roundTime;
-      this.startTime = new Date();
-      timerControlEdit.setAttribute("disabled", "");
-      timerTextA.innerText = "next break in";
-      timerControlToggle.innerText = "stop";
-      timerTextTime.innerText = this.toMinutes(this.timeRemaining);
-      this.timeoutRef = setInterval(() => {
-        this.timeRemaining -= MINUTE;
-
-        if (this.isRound && this.timeRemaining <= 0) {
-          this.isRound = false;
-          this.roundsElapsed += 1;
-          this.timeRemaining = this.breakTime;
-          audioElement.play();
-        }
-
-        if (!this.isRound && this.timeRemaining <= 0) {
-          this.isRound = true;
-          this.breaksElapsed += 1;
-          this.timeRemaining = this.roundTime;
-          audioElement.play();
-        }
-        if (this.isRound) {
-          timerTextA.innerText = "next break in";
-        } else {
-          timerTextA.innerText = "next round in";
-        }
-
-        timerTextTime.innerText = this.toMinutes(this.timeRemaining);
-      }, MINUTE);
-    } else if (this.timerRunning) {
-      this.timerRunning = false;
-      this.endTime = new Date();
-      this.addToHistory(
-        this.startTime,
-        this.endTime,
-        this.roundsElapsed,
-        this.breaksElapsed
-      );
-      timerControlEdit.removeAttribute("disabled");
-      this.timeRemaining = this.isRound ? this.roundTime : this.breakTime;
-      clearInterval(this.timeoutRef);
-      this.roundsElapsed = 0;
-      this.breaksElapsed = 0;
-      timerTextTime.innerText = this.toMinutes(0);
-      timerTextA.innerText = "next break in";
-      timerControlToggle.innerText = "start";
-      this.toggleClearHistoryButtonVisibility();
-    }
-  }
-
-  toggleEditor() {
-    if (this.isEditing) {
-      this.isEditing = false;
-      timerControlToggle.removeAttribute("disabled");
-      editor.style.display = "none";
-      timer.style.display = "block";
-      timerControlEdit.innerText = "Edit";
-
-      this.roundTime = editorRoundTime.value * MINUTE;
-      this.breakTime = editorBreakTime.value * MINUTE;
-    } else if (!this.isEditing) {
-      this.isEditing = true;
-      timerControlToggle.setAttribute("disabled", "");
-      editor.style.display = "block";
-      timer.style.display = "none";
-      timerControlEdit.innerText = "Save";
-    }
-  }
-
-  mapToHistoryObject(startTime, endTime, roundsElapsed, breaksElapsed) {
-    const timeStampText = this.mapHistoryObjectText(startTime, endTime);
-    return {
-      startTime: startTime,
-      endTime: endTime,
-      roundsElapsed: roundsElapsed,
-      breaksElapsed: breaksElapsed,
-      timeStampText: timeStampText
-    };
-  }
-
-  mapHistoryObjectText(startTime, endTime) {
-    let [sDate, sTime] = startTime
+function mapHistoryObjectText(startTime, endTime) {
+  let [sDate, sTime] = startTime
+    .toLocaleString()
+    .split(isEdge ? " " : ",")
+    .map(x => x.trim());
+  const [_, eTime] = endTime
+    .toLocaleString()
+    .split(isEdge ? " " : ",")
+    .map(x => x.trim());
+  const today = new Date();
+  if (
+    today
       .toLocaleString()
       .split(isEdge ? " " : ",")
-      .map(x => x.trim());
-    const [_, eTime] = endTime
-      .toLocaleString()
-      .split(isEdge ? " " : ",")
-      .map(x => x.trim());
-    const today = new Date();
-    if (
-      today
-        .toLocaleString()
-        .split(isEdge ? " " : ",")
-        .map(x => x.trim())[0] === sDate
-    ) {
-      sDate = "today";
-    }
-
-    const isYesterday = startTime.getDate() + 1 === today.getDate();
-    const isStartTimeEndOfMonth = startTime.getMonth() + 1 === today.getMonth();
-    if (isYesterday || isStartTimeEndOfMonth) {
-      sDate = "yesterday";
-    }
-
-    return `${sDate} - ${sTime} to ${eTime}`;
+      .map(x => x.trim())[0] === sDate
+  ) {
+    sDate = "today";
   }
 
-  addToHistory(startTime, endTime, roundsElapsed, breaksElapsed) {
-    const historyObject = this.mapToHistoryObject(
+  const isYesterday = startTime.getDate() + 1 === today.getDate();
+  const isStartTimeEndOfMonth = startTime.getMonth() + 1 === today.getMonth();
+  if (isYesterday || isStartTimeEndOfMonth) {
+    sDate = "yesterday";
+  }
+
+  return `${sDate} - ${sTime} to ${eTime}`;
+}
+
+function mapToHistoryObject(startTime, endTime, roundsElapsed, breaksElapsed) {
+  const timeStampText = mapHistoryObjectText(startTime, endTime);
+  return {
+    startTime,
+    endTime,
+    roundsElapsed,
+    breaksElapsed,
+    timeStampText
+  };
+}
+
+function generateRowFromHistoryObject(historyObject) {
+  const tableRow = document.createElement("tr");
+  const tableDescTimespan = document.createElement("td");
+  tableDescTimespan.innerText = historyObject.timeStampText;
+
+  const tableDescRounds = document.createElement("td");
+  tableDescRounds.innerText = historyObject.roundsElapsed;
+
+  const tableDescBreaks = document.createElement("td");
+  tableDescBreaks.innerText = historyObject.breaksElapsed;
+
+  const deleteButton = document.createElement("button");
+  deleteButton.classList.add("button");
+  deleteButton.innerText = "delete";
+
+  tableRow.appendChild(tableDescTimespan);
+  tableRow.appendChild(tableDescRounds);
+  tableRow.appendChild(tableDescBreaks);
+
+  historyTableBody.appendChild(tableRow);
+}
+
+function generateTable() {
+  historyTableBody.innerHTML = "";
+  appHistory.map(historyObject => {
+    generateRowFromHistoryObject(historyObject);
+  });
+}
+
+
+function saveToLocalStorage() {
+  window.localStorage.setItem("history", JSON.stringify(appHistory));
+}
+
+function addToHistory(startTime, endTime, roundsElapsed, breaksElapsed) {
+  const historyObject = mapToHistoryObject(
+    startTime,
+    endTime,
+    roundsElapsed,
+    breaksElapsed
+  );
+  appHistory.push(historyObject);
+  generateTable();
+  saveToLocalStorage();
+}
+
+function toggleClearHistoryButtonVisibility() {
+  if (appHistory.length > 0) {
+    clearHistoryButton.style.display = "flex";
+  } else {
+    clearHistoryButton.style.display = "none";
+  }
+}
+
+function toggleTimer() {
+  if (!timerRunning) {
+    timerRunning = true;
+    timeRemaining = roundTime;
+    startTime = new Date();
+    timerControlEdit.setAttribute("disabled", "");
+    timerTextA.innerText = "next break in";
+    timerControlToggle.innerText = "stop";
+    timerTextTime.innerText = toMinutes(timeRemaining);
+    timeoutRef = setInterval(() => {
+      timeRemaining -= MINUTE;
+
+      if (isRound && timeRemaining <= 0) {
+        isRound = false;
+        roundsElapsed += 1;
+        timeRemaining = breakTime;
+        audioElement.play();
+      }
+
+      if (!isRound && timeRemaining <= 0) {
+        isRound = true;
+        breaksElapsed += 1;
+        timeRemaining = roundTime;
+        audioElement.play();
+      }
+      if (isRound) {
+        timerTextA.innerText = "next break in";
+      } else {
+        timerTextA.innerText = "next round in";
+      }
+
+      timerTextTime.innerText = toMinutes(timeRemaining);
+    }, MINUTE);
+  } else if (timerRunning) {
+    timerRunning = false;
+    endTime = new Date();
+    addToHistory(
       startTime,
       endTime,
       roundsElapsed,
       breaksElapsed
     );
-    this.history.push(historyObject);
-    this.generateTable();
-    this.saveToLocalStorage();
+    timerControlEdit.removeAttribute("disabled");
+    timeRemaining = isRound ? roundTime : breakTime;
+    clearInterval(timeoutRef);
+    roundsElapsed = 0;
+    breaksElapsed = 0;
+    timerTextTime.innerText = toMinutes(0);
+    timerTextA.innerText = "next break in";
+    timerControlToggle.innerText = "start";
+    toggleClearHistoryButtonVisibility();
   }
+}
 
-  generateRowFromHistoryObject(historyObject) {
-    const tableRow = document.createElement("tr");
-    const tableDescTimespan = document.createElement("td");
-    tableDescTimespan.innerText = historyObject.timeStampText;
+function toSeconds(timeInMilliseconds) {
+  return Math.floor(timeInMilliseconds / 1000);
+}
 
-    const tableDescRounds = document.createElement("td");
-    tableDescRounds.innerText = historyObject.roundsElapsed;
+function toggleEditor() {
+  if (isEditing) {
+    isEditing = false;
+    timerControlToggle.removeAttribute("disabled");
+    editor.style.display = "none";
+    timer.style.display = "block";
+    timerControlEdit.innerText = "Edit";
 
-    const tableDescBreaks = document.createElement("td");
-    tableDescBreaks.innerText = historyObject.breaksElapsed;
-
-    const deleteButton = document.createElement("button");
-    deleteButton.classList.add("button");
-    deleteButton.innerText = "delete";
-
-    tableRow.appendChild(tableDescTimespan);
-    tableRow.appendChild(tableDescRounds);
-    tableRow.appendChild(tableDescBreaks);
-
-    historyTableBody.appendChild(tableRow);
+    roundTime = editorRoundTime.value * MINUTE;
+    breakTime = editorBreakTime.value * MINUTE;
+  } else if (!isEditing) {
+    isEditing = true;
+    timerControlToggle.setAttribute("disabled", "");
+    editor.style.display = "block";
+    timer.style.display = "none";
+    timerControlEdit.innerText = "Save";
   }
+}
 
-  generateTable() {
-    historyTableBody.innerHTML = "";
-    this.history.map(historyObject => {
-      this.generateRowFromHistoryObject(historyObject);
-    });
+function loadFromLocalStorage() {
+  let appHistory = window.localStorage.getItem("history");
+
+  if (appHistory) {
+    appHistory = JSON.parse(appHistory);
+    generateTable();
   }
-
-  saveToLocalStorage() {
-    window.localStorage.setItem("history", JSON.stringify(this.history));
-  }
-
-  loadFromLocalStorage() {
-    const history = window.localStorage.getItem("history");
-
-    if (history) {
-      this.history = JSON.parse(history);
-      this.generateTable();
-    }
-  }
-
-  clearHistory() {
-    this.history = [];
-    this.saveToLocalStorage();
-    this.generateTable();
-    this.toggleClearHistoryButtonVisibility();
-  }
-
-  toggleClearHistoryButtonVisibility() {
-    if (this.history.length > 0) {
-      clearHistoryButton.style.display = "flex";
-    } else {
-      clearHistoryButton.style.display = "none";
-    }
-  }
-
-  toMinutes(timeInMilliseconds) {
-    const timeInMinutes = Math.floor(timeInMilliseconds / (60 * 1000));
-    return timeInMinutes > 9 ? timeInMinutes : `0${timeInMinutes}`;
-  }
-
-  toSeconds(timeInMilliseconds) {
-    return Math.floor(timeInMilliseconds / 1000);
-  }
+}
+function clearHistory() {
+  appHistory = [];
+  saveToLocalStorage();
+  generateTable();
+  toggleClearHistoryButtonVisibility();
 }
 
 function handleAboutToggle() {
@@ -258,8 +249,16 @@ function handleAboutToggle() {
   console.log("done", aboutContent.style.display);
 }
 
-// Start the app
-new Pomodoro();
+loadFromLocalStorage();
+
+
+toggleClearHistoryButtonVisibility();
+
+timerControlToggle.addEventListener("click", toggleTimer);
+timerControlEdit.addEventListener("click", toggleEditor);
+clearHistoryButton.addEventListener("click", clearHistory);
+
+editor.style.display = "none";
 
 // Bind non app related triggers
 aboutContent.style.display = "none";

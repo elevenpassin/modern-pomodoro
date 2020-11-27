@@ -1,40 +1,32 @@
-if (importScripts) {
-  importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
-}
 
+const KEY = 'modern-pomodoro-nov-2020';
 
+self.addEventListener('message', (event) => {
+  console.log(event.data.type)
+    if (event.data.type === 'CACHE_URLS') {
+        event.waitUntil(
+            caches.open(KEY)
+                .then( (cache) => {
+                    return cache.addAll(event.data.payload);
+                })
+        );
+    }
+});
 
-if (workbox) {
-  workbox.routing.registerRoute(
-    new RegExp('^https://fonts.(?:googleapis|gstatic).com/(.*)'),
-    new workbox.strategies.NetworkFirst({
-      cacheName: 'fonts-cache',
-    }),
-  );
+self.addEventListener('fetch', (event) => {
+  if (event.request.method === 'GET') {
+    event.respondWith(
+      caches.match(event.request).then((resp) => {
+        return resp || fetch(event.request).then((response) => {
+          let responseClone = response.clone();
+          caches.open(KEY).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
+  
+          return response;
+        })
+      })
+    );
+  }
+});
 
-  workbox.routing.registerRoute(
-    '/modern-pomodoro/',
-    new workbox.strategies.NetworkFirst({
-      cacheName: 'html-cache',
-    })
-  );
-
-  workbox.routing.registerRoute(
-    // Cache CSS files
-    /.*\.css/,
-    // Use cache but update in the background ASAP
-    new workbox.strategies.NetworkFirst({
-      // Use a custom cache name
-      cacheName: 'css-cache',
-    })
-  );
-
-  workbox.routing.registerRoute(
-    // Cache JS/JSON files
-    /.*\.(js)/,
-    // Use cache but update in background ASAP
-    new workbox.strategies.NetworkFirst({
-      cacheName: 'scripts-cache',
-    })
-  )
-}

@@ -307,8 +307,24 @@ addToHomeScreenPrompt.addEventListener("click", () => {
   });
 });
 
-window.onload = () => {
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js");
-  }
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./sw.js").then((reg) => {
+    const data = {
+      type: 'CACHE_URLS',
+      payload: [
+          location.href,
+          ...performance.getEntriesByType('resource').map((r) => r.name)
+      ]
+    };
+
+    if (reg && reg.installing && reg.installing.postMessage) {
+      reg.installing.postMessage(data);
+    }
+
+    // registration worked
+    console.log('Registration succeeded. Scope is ' + reg.scope);
+  }).catch((error) => {
+    // registration failed
+    console.log('Registration failed with ' + error);
+  });
 }

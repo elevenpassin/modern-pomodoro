@@ -4,9 +4,6 @@ const isIE = /*@cc_on!@*/false || !!document.documentMode;
 // Edge 20+
 const isEdge = !isIE && !!window.StyleMedia;
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./scripts/sw.js");
-}
 
 const audioElement = document.querySelector('audio');
 
@@ -309,3 +306,9 @@ addToHomeScreenPrompt.addEventListener("click", () => {
     addToHomeScreenDeferredPrompt = null;
   });
 });
+
+window.onload = () => {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js");
+  }
+}
